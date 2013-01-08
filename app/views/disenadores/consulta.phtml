@@ -1,0 +1,33 @@
+<?php Load::lib("formulario"); ?>
+<?= isset($mensaje) ? $mensaje."<br><br>" : "" ?>
+<?= Formulario::inicio("disenadores/modificar") ?>
+	<?= Formulario::oculto("id", $disenador -> id) ?>
+	<table border="1" cellpadding="5" cellspacing="1">
+		<tr>
+			<td>Nombre: </td>
+			<td><?= Formulario::mayusculas("nombre",$disenador -> nombre) ?></td>
+		</tr>
+		<tr>
+			<td>Correo Electrónica: </td>
+			<td><?= Formulario::texto("correo",$disenador -> correo) ?></td>
+		</tr>
+		<tr>
+			<td>Usuario: </td>
+			<td><?= Formulario::texto("usuario",$disenador -> usuario) ?></td>
+		</tr>
+		<tr>
+			<td>Contraseña: </td>
+			<td><?= Formulario::password("password", "**********") ?></td>
+		</tr>
+		<tr>
+			<td>Activo: </td>
+			<td>
+				<?php $sino = array("SI" => "SI","NO" => 	"NO"); ?>
+				<?= Formulario::select("activo",$sino,$disenador -> activo) ?>
+			</td>
+		</tr>
+		<tr>
+			<td colspan="2" align="right"><?= Formulario::submit("Modificar","style: font-weight: bold;") ?></td>
+		</tr>
+	</table>
+<?= Formulario::fin() ?>

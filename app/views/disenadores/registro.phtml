@@ -1,0 +1,24 @@
+<?php Load::lib("formulario"); ?>
+<?= Formulario::inicio("disenadores/registrar") ?>
+	<table border="1" cellpadding="5" cellspacing="1">
+		<tr>
+			<td>Nombre: </td>
+			<td><?= Formulario::mayusculas("nombre") ?></td>
+		</tr>
+		<tr>
+			<td>Correo Electrónica: </td>
+			<td><?= Formulario::texto("correo") ?></td>
+		</tr>
+		<tr>
+			<td>Usuario: </td>
+			<td><?= Formulario::texto("usuario") ?></td>
+		</tr>
+		<tr>
+			<td>Contraseña: </td>
+			<td><?= Formulario::password("password") ?></td>
+		</tr>
+		<tr>
+			<td colspan="2" align="right"><?= Formulario::submit("Registrar","style: font-weight: bold;") ?></td>
+		</tr>
+	</table>
+<?= Formulario::fin() ?>
