@@ -4,7 +4,8 @@
     		$this -> disenadores = Disenador::reporte();
 			
 			switch($mensaje){
-				case "eliminado": $this -> mensaje = "El Diseñador ha sido eliminado correctamente."; 
+				case "eliminado": $this -> mensaje = "El Diseñador ha sido eliminado correctamente."; break;
+				case "registrado": $this -> mensaje = "El Diseñador ha sido registrado correctamente."; break;
 			}
     	}
 		
@@ -24,7 +25,7 @@
 			
 			$disenador -> guardar();
 			
-			$this -> redirect("disenadores/reporte");
+			$this -> redirect("disenadores/reporte/registrado");
     	}
 		
 		public function consulta($id, $mensaje) {

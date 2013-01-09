@@ -1,25 +1,27 @@
 <?php Load::lib("html") ?>
-<?= isset($mensaje) ? $mensaje."<br><br>" : "" ?>
-<table border="1" cellpadding="5" cellspacing="1">
-	<tr>
-		<th>Id</th>
-		<th>Nombre</th>
-		<th>Usuario</th>
-		<th>Contraseña</th>
-		<th>Correo</th>
-		<th>Activo</th>
-		<th colspan="2"></th>
-	</tr>
-	<?php if($disenadores) foreach($disenadores as $disenador){ ?>
-	<tr>
-		<td><?= $disenador -> id ?></td>
-		<td><?= $disenador -> nombre ?></td>
-		<td><?= $disenador -> usuario ?></td>
-		<td><?= $disenador -> password ?></td>
-		<td><?= $disenador -> correo ?></td>
-		<td><?= $disenador -> activo ?></td>
-		<td><?= Html::link("disenadores/consulta/".$disenador -> id,"Modificar") ?></td>
-		<td><?= Html::link("disenadores/eliminar/".$disenador -> id,"Eliminar") ?></td>
-	</tr>
-	<?php } ?>
-</table>
+<?= isset($mensaje) ? '<div class="alert alert-success" style="margin: 0px auto 30px; width: 90%;">' . $mensaje . "</div>" : "" ?>
+<div class="container">
+	<table border="1" cellpadding="5" cellspacing="1" class="table table-bordered table-striped">
+		<tr>
+			<th>Id</th>
+			<th>Nombre</th>
+			<th>Usuario</th>
+			<th>Contraseña</th>
+			<th>Correo</th>
+			<th>Activo</th>
+			<th colspan="2"></th>
+		</tr>
+		<?php if($disenadores) foreach($disenadores as $disenador){ ?>
+		<tr>
+			<td><?= $disenador -> id ?></td>
+			<td><?= $disenador -> nombre ?></td>
+			<td><?= $disenador -> usuario ?></td>
+			<td><?= $disenador -> password ?></td>
+			<td><?= $disenador -> correo ?></td>
+			<td><?= $disenador -> activo ?></td>
+			<td><?= Html::link("disenadores/consulta/".$disenador -> id,"Modificar") ?></td>
+			<td><?= Html::link("disenadores/eliminar/".$disenador -> id,"Eliminar") ?></td>
+		</tr>
+		<?php } ?>
+	</table>	
+</div>

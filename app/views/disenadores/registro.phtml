@@ -1,24 +1,37 @@
 <?php Load::lib("formulario"); ?>
-<?= Formulario::inicio("disenadores/registrar") ?>
-	<table border="1" cellpadding="5" cellspacing="1">
-		<tr>
-			<td>Nombre: </td>
-			<td><?= Formulario::mayusculas("nombre") ?></td>
-		</tr>
-		<tr>
-			<td>Correo Electrónica: </td>
-			<td><?= Formulario::texto("correo") ?></td>
-		</tr>
-		<tr>
-			<td>Usuario: </td>
-			<td><?= Formulario::texto("usuario") ?></td>
-		</tr>
-		<tr>
-			<td>Contraseña: </td>
-			<td><?= Formulario::password("password") ?></td>
-		</tr>
-		<tr>
-			<td colspan="2" align="right"><?= Formulario::submit("Registrar","style: font-weight: bold;") ?></td>
-		</tr>
-	</table>
-<?= Formulario::fin() ?>
+<div class="container">
+	<?= Formulario::inicio("disenadores/registrar","registro","class: form-horizontal well","style: margin: auto; width: 420px;") ?>
+		<fieldset>
+			<legend>Registro de Diseñador</legend>
+			<div class="control-group">
+	            <label class="control-label">Nombre: </label>
+	            <div class="controls">
+	           		<?= Formulario::mayusculas("nombre","") ?>
+	            </div>
+	        </div>
+	        <div class="control-group">
+	            <label class="control-label">Correo Electrónico: </label>
+	            <div class="controls">
+	           		<?= Formulario::texto("correo","") ?>
+	            </div>
+	        </div>
+	        <div class="control-group">
+	            <label class="control-label">Usuario: </label>
+	            <div class="controls">
+	           		<?= Formulario::texto("usuario","") ?>
+	            </div>
+	        </div>
+	        <div class="control-group">
+	            <label class="control-label">Contraseña: </label>
+	            <div class="controls">
+	           		<?= Formulario::password("password","") ?>
+	            </div>
+	        </div>
+	        
+	        <div class="form-actions" align="right">
+	        	<?= Formulario::reset("Cancelar","style: font-weight: bold;","class: btn btn-danger") ?>
+	        	<?= Formulario::submit("Registrar","style: font-weight: bold;","class: btn btn-success") ?>
+          	</div>
+		</fieldset>
+	<?= Formulario::fin() ?>
+</div>
