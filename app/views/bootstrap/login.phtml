@@ -1,0 +1,35 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:fb="http://www.facebook.com/2008/fbml">
+    <head>
+        <meta http-equiv='Content-type' content='text/html; charset=<?php echo APP_CHARSET ?>' />
+        <title><?= PROYECTO_NOMBRE ?></title>
+        <link rel="shortcut icon" href="<?= PUBLIC_PATH ?>favicon.ico" type="image/x-icon" /> 
+        <meta http-equiv="imagetoolbar" content="no" />
+    
+        <?= stylesheet_link_tag('bootstrap') ?>
+        <?= stylesheet_link_tag('bootstrap_login') ?>
+        <?= stylesheet_link_tag('bootstrap-responsive') ?>
+        
+        <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
+        <!--[if lt IE 9]>
+          <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+        <![endif]-->
+
+    </head>
+    <body>
+        <div class="container">
+            <form class="form-signin">
+                <h2 class="form-signin-heading">Please sign in</h2>
+                <input type="text" class="input-block-level" placeholder="Email address">
+                <input type="password" class="input-block-level" placeholder="Password">
+                <label class="checkbox">
+                    <input type="checkbox" value="remember-me"> Remember me
+                </label>
+                <button class="btn btn-large btn-primary" type="submit">Sign in</button>
+            </form>
+        </div>
+        
+        <?= View::partial("jquery",false,'template: ui-darkness, version: 13'); ?>
+        <?= javascript_include_tag('bootstrap') ?>
+    </body>
+</html>
