@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<response uri="/crm/private/xml/SalesOrders/getRecordById">
+	<result>
+		<SalesOrders>
+			<row no="1">
+				<FL val="SALESORDERID">150865000007874027</FL>
+				<FL val="SO Number">150865000007874029</FL>
+				<FL val="Subject">f10</FL>
+				<FL val="POTENTIALID">150865000007874023</FL>
+				<FL val="Potential Name">Juan Catalfamo-1</FL>
+				<FL val="Due Date">2012-11-27</FL>
+				<FL val="CONTACTID">150865000007874021</FL>
+				<FL val="Contact Name">Juan Catalfamo</FL>
+				<FL val="Status">Para Envio</FL>
+				<FL val="ACCOUNTID">150865000007874019</FL>
+				<FL val="Account Name">Juan Catalfamo</FL>
+				<FL val="SMOWNERID">150865000000033001</FL>
+				<FL val="Sales Order Owner">Más Folletos Por Menos</FL>
+				<FL val="SMCREATORID">150865000000033001</FL>
+				<FL val="Created By">Más Folletos Por Menos</FL>
+				<FL val="Created Time">2012-11-20 10:48:56</FL>
+				<FL val="Modified Time">2013-01-07 17:33:29</FL>
+				<FL val="Sub Total">2245</FL>
+				<FL val="Tax">0</FL>
+				<FL val="Adjustment">2205</FL>
+				<FL val="Grand Total">40</FL>
+				<FL val="Shipping Street">Padre Vazquez 22áéíóñ</FL>
+				<FL val="Billing City">null</FL>
+				<FL val="Billing State">GBA</FL>
+				<FL val="Shipping Code">null</FL>
+				<FL val="Product Details">
+					<product no="1">
+						<FL val="Product Id">150865000000307135</FL>
+						<FL val="Product Name">10k2030</FL>
+						<FL val="Unit Price">2195.0</FL>
+						<FL val="Quantity">1.0</FL>
+						<FL val="Quantity in Stock">9.999997E7</FL>
+						<FL val="Total">2195.0</FL>
+						<FL val="Discount">0.0</FL>
+						<FL val="Total After Discount">2195.0</FL>
+						<FL val="List Price">2195.0</FL>
+						<FL val="Net Total">2195.0</FL>
+						<FL val="Tax">0.0</FL>
+						<FL val="Product Description">null</FL>
+					</product>
+					<product no="2">
+						<FL val="Product Id">150865000001575009</FL>
+						<FL val="Product Name">Diseño Pre-prensa</FL>
+						<FL val="Unit Price">10.0</FL>
+						<FL val="Quantity">1.0</FL>
+						<FL val="Quantity in Stock">9.9998335E7</FL>
+						<FL val="Total">10.0</FL>
+						<FL val="Discount">0.0</FL>
+						<FL val="Total After Discount">10.0</FL>
+						<FL val="List Price">10.0</FL>
+						<FL val="Net Total">10.0</FL>
+						<FL val="Tax">0.0</FL>
+						<FL val="Product Description">null</FL>
+					</product>
+					<product no="3">
+						<FL val="Product Id">150865000001700039</FL>
+						<FL val="Product Name">Envio Retiro</FL>
+						<FL val="Unit Price">40.0</FL>
+						<FL val="Quantity">1.0</FL>
+						<FL val="Quantity in Stock">9.9999557E7</FL>
+						<FL val="Total">40.0</FL>
+						<FL val="Discount">0.0</FL>
+						<FL val="Total After Discount">40.0</FL>
+						<FL val="List Price">40.0</FL>
+						<FL val="Net Total">40.0</FL>
+						<FL val="Tax">0.0</FL>
+						<FL val="Product Description">null</FL>
+					</product>
+				</FL>
+				<FL val="Description">null</FL>
+				<FL val="Discount">0</FL>
+				<FL val="Tipo pliego">10k</FL>
+				<FL val="Módulos">4</FL>
+				<FL val="Anticipo necesario">1100</FL>
+				<FL val="Diseño gráfico">Cliente envia</FL>
+				<FL val="Contrato">Wed, 21 Nov 2012 10:55:34 -0300</FL>
+				<FL val="Contacto (otro)">null</FL>
+				<FL val="Otro transporte">null</FL>
+				<FL val="Horario de entrega">null</FL>
+				<FL val="Forma de entrega">null</FL>
+				<FL val="Diseño gráfico (estado)">Archivo recibido / Sin especificaciones</FL>
+				<FL val="Transporte">Expreso Maipu</FL>
+				<FL val="Telefono Entrega">3757583499</FL>
+				<FL val="TipoCli">1</FL>
+				<FL val="Notas Entrega">asdxyz</FL>
+				<FL val="Pliego Num">B</FL>
+			</row>
+		</SalesOrders>
+	</result>
+</response>
