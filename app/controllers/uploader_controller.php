@@ -9,7 +9,7 @@
 			echo $pedido -> crm_numero;
 			
 			$pedido -> guardarCRM();
-			
+			 
 			$this -> pedido = $pedido;
         }
     }
