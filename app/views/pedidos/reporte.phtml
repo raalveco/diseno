@@ -1,0 +1,26 @@
+<?php Load::lib("html") ?>
+<?= isset($mensaje) ? '<div class="alert alert-success" style="margin: 0px auto 30px; width: 90%;">' . $mensaje . "</div>" : "" ?>
+<div class="container">
+	<table border="1" cellpadding="5" cellspacing="1" class="table table-bordered table-striped">
+		<tr>
+			<th>Orden de Venta</th>
+			<th>Nombre</th>
+			<th>Total</th>
+			<th>Anticipo</th>
+			<th>Saldo</th>
+			<th></th>
+			<th></th>
+		</tr>
+		<?php if($pedidos) foreach($pedidos as $pedido){ ?>
+		<tr>
+			<td><?= $pedido -> crm_numero ?></td>
+			<td><?= $pedido -> nombre ?></td>
+			<td><?= $pedido -> total ?></td>
+			<td><?= $pedido -> anticipo ?></td>
+			<td><?= $pedido -> saldo ?></td>
+			<th style="text-align: center"><?= Html::link("pedidos/consulta/".$pedido -> id, html::imagen("miniconos/page_white_edit.png")) ?> </th>
+			<th style="text-align: center"><?= Html::link("pedidos/eliminar/".$pedido -> id, html::imagen("miniconos/cancel.png")) ?></th>
+		</tr>
+		<?php } ?>
+	</table>	
+</div>

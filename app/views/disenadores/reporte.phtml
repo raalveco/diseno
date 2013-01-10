@@ -19,8 +19,8 @@
 			<td><?= $disenador -> password ?></td>
 			<td><?= $disenador -> correo ?></td>
 			<td><?= $disenador -> activo ?></td>
-			<td><?= Html::link("disenadores/consulta/".$disenador -> id,"Modificar") ?></td>
-			<td><?= Html::link("disenadores/eliminar/".$disenador -> id,"Eliminar") ?></td>
+			<td style="text-align: center"><?= Html::link("disenadores/consulta/".$disenador -> id, html::imagen("miniconos/page_white_edit.png")) ?></td>
+			<td style="text-align: center"><?= Html::link("disenadores/eliminar/".$disenador -> id, html::imagen("miniconos/cancel.png")) ?></td>
 		</tr>
 		<?php } ?>
 	</table>	
