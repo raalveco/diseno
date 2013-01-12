@@ -1,0 +1,142 @@
+<?php Load::lib("formulario"); ?>
+<div class="container">
+	<fieldset>
+		<legend>
+			Registro de Seña
+		</legend>
+		
+		<table border="0" style="width: 100%">
+			<tr>
+				<th width="30%">
+					<table border="0" style="padding: 5px">
+						<tr>
+							<th style="width: 100px; text-align: left"> OV: </th>
+							<th><?= Formulario::numerico("crm_numero","$crm_numero")?></th>
+						</tr>
+					</table>
+				</th>
+				<th width="5%"></th>
+				<th width="30%"></th>
+				<th width="5%"></th>
+				<th width="30%"></th>
+			</tr>
+			<tr>
+				<th colspan="5" height="20"></th>
+			</tr>
+			<tr>
+				<th width="30%" style="vertical-align: top;">
+					<?= Formulario::inicio("anticipos/registrar/deposito","registro","class: form-horizontal well","style: margin: auto")?>
+					<?= Formulario::oculto("id_pedido", $id_pedido) ?>
+					<table border="0" style="padding: 5px">
+						<tr>
+							<td colspan="2" style="text-align: left">DEPOSITO</td>
+						</tr>
+						<tr>
+							<th colspan="2">&nbsp;</th>
+						</tr>
+						<tr>
+							<td style="width: 100px; text-align: left"> Sucursal: </td>
+							<td><?= Formulario::texto("sucursal","")?></td>
+						</tr>
+						<tr>
+							<td colspan="2" style="height: 5px"></td>
+						</tr>
+						<tr>
+							<td style="width: 100px; text-align: left"> Importe: </td>
+							<td><?= Formulario::dinero("importe","")?></td>
+						</tr>
+						<tr>
+							<td colspan="2" style="height: 5px"></td>
+						</tr>
+						<tr>
+							<td style="width: 100px; text-align: left"> Fecha: </td>
+							<td><?= Formulario::fecha("fechaDepo","")?></td>
+						</tr>
+						<tr>
+							<td colspan="2" style="height: 5px"></td>
+						</tr>
+						<tr>
+							<td colspan="2" style="text-align: right"> <?= Formulario::reset("Cancelar","style: font-weight: bold;","class: btn btn-danger") ?>
+							<?= Formulario::submit("Modificar","style: font-weight: bold;","class: btn btn-success") ?>						
+							</td>						
+						</tr>	
+					</table>
+					<?= Formulario::fin() ?>
+				</th>
+				<th width="5%"></th>
+				<th width="30%" style="vertical-align: top;">
+					<?= Formulario::inicio("anticipos/registrar/transferencia","registro","class: form-horizontal well","style: margin: auto")?>
+					<?= Formulario::oculto("id_pedido", $id_pedido) ?>
+					<table border="0" style="padding: 5px">
+						<tr>
+							<td colspan="2" style="text-align: left">TRANSFERENCIA</td>
+						</tr>
+						<tr>
+							<th colspan="2">&nbsp;</th>
+						</tr>
+						<tr>
+							<td style="width: 100px; text-align: left"> Numero: </td>
+							<td><?= Formulario::numerico("numero","")?></td>
+						</tr>
+						<tr>
+							<td colspan="2" style="height: 5px"></td>
+						</tr>
+						<tr>
+							<td style="width: 100px; text-align: left"> Importe: </td>
+							<td><?= Formulario::dinero("importe","")?></td>
+						</tr>
+						<tr>
+							<td colspan="2" style="height: 5px"></td>
+						</tr>
+						<tr>
+							<td style="width: 100px; text-align: left"> Fecha: </td>
+							<td><?= Formulario::fecha("fechaTrans","")?></td>
+						</tr>
+						<tr>
+							<td colspan="2" style="height: 5px"></td>
+						</tr>
+						<tr>
+							<td colspan="2" style="text-align: right"> <?= Formulario::reset("Cancelar","style: font-weight: bold;","class: btn btn-danger") ?>
+							<?= Formulario::submit("Modificar","style: font-weight: bold;","class: btn btn-success") ?>						
+							</td>						
+						</tr>	
+					</table>
+					<?= Formulario::fin() ?>
+				</th>
+				<th width="5%"></th>
+				<th width="30%" style="vertical-align: top;">
+					<?= Formulario::inicio("anticipos/registrar/efectivo","registro","class: form-horizontal well","style: margin: auto")?>
+					<?= Formulario::oculto("id_pedido", $id_pedido) ?>
+					<table border="0" style="padding: 5px">
+						<tr>
+							<td colspan="2" style="text-align: left">EFECTIVO</td>
+						</tr>
+						<tr>
+							<th colspan="2">&nbsp;</th>
+						</tr>
+						<tr>
+							<td style="width: 100px; text-align: left"> Importe: </td>
+							<td><?= Formulario::dinero("importe","")?></td>
+						</tr>
+						<tr>
+							<td colspan="2" style="height: 5px"></td>
+						</tr>
+						<tr>
+							<td style="width: 100px; text-align: left"> Fecha: </td>
+							<td><?= Formulario::fecha("fechaEfe","")?></td>
+						</tr>
+						<tr>
+							<td colspan="2" style="height: 5px"></td>
+						</tr>
+						<tr>
+							<td colspan="2" style="text-align: right"> <?= Formulario::reset("Cancelar","style: font-weight: bold;","class: btn btn-danger") ?>
+							<?= Formulario::submit("Modificar","style: font-weight: bold;","class: btn btn-success") ?>						
+							</td>						
+						</tr>	
+					</table>
+					<?= Formulario::fin() ?>
+			</tr>
+		</table>
+		<br />
+	</fieldset>
+</div>
