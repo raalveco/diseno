@@ -1,5 +1,6 @@
 <?php Load::lib("formulario"); ?>
 <?php Load::lib("html"); ?>
+<?php Load::lib("mensajes"); ?>
 <style type="text/css">
 	body{
 		font-size: 12px;
@@ -57,11 +58,14 @@
 					
 				}
 				else{
-					$("#name2").html(res.file);
 					
-					$('#myModal2').modal({
-					  keyboard: true
-					})
+					$('#modal-body').load('<?= get_kumbia_url("uploader/error") ?>/'+res.file+'/'+res.error);
+					
+					setTimeout( function() {
+						$('#errorModal').modal({
+						  keyboard: true
+						});
+					}, 1000 );
 				}
     		},
 			'swf'      : '<?= PUBLIC_PATH ?>uploadify.swf',
@@ -91,11 +95,6 @@
 		$('#caras').val($("input[name='carastmp']:checked").val());
 		$('#comentarios').val($('#comentariostmp').val());
 		$('#ordenventa').val(<?= $pedido -> crm_numero ?>);
-		
-		alert($('#caras').val());
-		alert($('#comentarios').val());
-		alert($('#ordenventa').val());
-		alert($('#archivo').val());
 	}
 	
 	
@@ -111,7 +110,7 @@ $(document).ready(function(){
       $("#mensaje").load("<?= APLICACION_PATH ?>uploader/revisar/<?= $pedido -> crm_numero ?>");
    });
 })
-</script><?= $pedido -> diseno_estado ?>
+</script>
 <div class="container hero-unit" style="font-size: 14px;">
 	<div class="row">
 		<div class="span6">
@@ -183,7 +182,7 @@ $(document).ready(function(){
 		<div class="span6">
 			<?= Formulario::inicio("#",false,"class: form-horizontal well","style: margin: auto; height: 500px;") ?>
 			<div class"row" align="justify" id="mensaje" style="font-size: 14px; height: 400px; max-width: 520px;">
-				<?= Mensaje::get("INICIO_UPLOADER") ?>
+				<?= Mensajes::consultar("INICIO_UPLOADER",array("PRUEBA" => "RAMIRO VERA")) ?>
 			</div>
 			<div class="form-actions" align="right">
 				<?= Formulario::boton("Registrar","return confirmar();","id: boton","class: btn btn-success") ?>
@@ -192,24 +191,19 @@ $(document).ready(function(){
 		</div>
 	</div>
 </div>
-
 <div id="myModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="font-size: 14px;">
-	<?= Formulario::inicio("pedido/upload","upload","class: form-horizontal well","style: margin: auto; height: 500px;") ?>
+	<?= Formulario::inicio("uploader/cargar","upload","class: form-horizontal well","style: margin: auto; height: 500px;") ?>
+		<?= Formulario::oculto("pedido", $pedido -> id) ?>
 		<?= Formulario::oculto("caras", 2) ?>
 		<?= Formulario::oculto("comentarios", "") ?>
 		<?= Formulario::oculto("ordenventa", "") ?>
 		<?= Formulario::oculto("archivo", "") ?>
 	 <div class="modal-header" align="center">
 	 	<button type="button" class="close" data-dismiss="modal" aria-hidden="true">x</button>
-	 	<h3 id="myModalLabel">¡Archivo casi listo para impresión!</h3>
+	 	<h3 id="myModalLabel"><?= Mensajes::consultar("DISENO_CASI_LISTO") ?></h3>
 	 </div>
 	 <div class="modal-body" align="justify">
-	 	<p>Parece que el archivo <span id="name1" style="color: yellow; font-weight: bold;"></span> esta listo (OK) para impresión, de todas formas nuestro equipo de diseño le dará una segunda revisión para asegurarnos que todo esta OK.</p>
-	 	<br>
-	 	<p style="color: yellow; font-size: 18px;" align="center"><b style="font-size: 24px;">IMPORTANTE</b><br><br>Estos archivos se imprimirán. <br><br><span style="font-size: 14px;">No se aceptan cambios una vez que el archivo entra a impresión.</span></p>
-	 	<br>
-	 	<p>Recomendamos que verifique bien, que subió los archivos correctos para impresión</p>
-	 	<p>¿Estás seguro que los archivos que subiste estan listos para impresión?</p>
+	 	<?= Mensajes::consultar("REVISAR_DISENO") ?>
 	 </div>
 	  <div class="modal-footer">
 	    <button class="btn btn-danger" id="revisar" data-dismiss="modal" aria-hidden="true">Revisar</button>
@@ -217,25 +211,17 @@ $(document).ready(function(){
 	  </div>
 	 <?= Formulario::fin() ?>
 </div>
-
-
-<div id="myModal2" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="font-size: 14px;">
-	 <div class="modal-header" align="center">
-	 	<button type="button" class="close" data-dismiss="modal" aria-hidden="true">x</button>
-	 	<h3 id="myModalLabel" style="color: yellow; font-weight: bold;">¡Ufa! !Paso algo con el archivo!</h3>
-	 </div>
-	 <div class="modal-body" align="justify">
-	 	<p>El archivo que acaba de subir (<span id="name2" style="color: yellow; font-weight: bold;"></span>) no esta convertido a curvas. No podemos imprimir un archivo de Ilustrador que no esta convertido a curvas. ¿Por qué? <a href="#">Vealo Aquí</a></p>
-	 	<br>
-	 	<p>Por favor, conviertalo a curvas y suba el archivo nuevamente.</p>
-	 	<br>
-	 	<p align="center" style="font-size: 16px;"><span style="font-size: 22px; color: yellow;">¿Cómo resuelvo esto?</span><br><br><a href="#">Vea este sencillo Instructivo</a><br><br>sobre cómo convertir su Ilustrador a Curvas</p>
-	 	<br>
-	 	<p align="center" style="font-size: 22px; color: yellow;">¿Tiene Dudas?</p>
-	 	<br>
-	 	<p align="center">Puede llamar al <span>3220 - 0657</span> o enviar su consulta a <br>diseno@masfolletospormenos.com.ar</p>
-	 </div>
-	  <div class="modal-footer">
-	    <button class="btn btn-success" id="ok" data-dismiss="modal" aria-hidden="true">Aceptar</button>
-	  </div>
+<div id="errorModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="font-size: 14px;">
+	<div class="modal-header" align="center">
+		<button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+			x
+		</button>
+		<h3 id="myModalLabel" style="color: yellow; font-weight: bold;"><?= Mensajes::consultar("TITULO_ERROR") ?></h3>
+	</div>
+	<div id="modal-body" class="modal-body" align="justify"></div>
+	<div class="modal-footer">
+		<button class="btn btn-success" id="ok" data-dismiss="modal" aria-hidden="true">
+			Aceptar
+		</button>
+	</div>
 </div>
