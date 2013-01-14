@@ -10,6 +10,7 @@
 			switch($mensaje){
 				case "eliminado": $this -> mensaje = "El pedido ha sido eliminado correctamente."; break;
 				case "registrado": $this -> mensaje = "El pedido ha sido registrado correctamente."; break;
+				case "anticipo_registrado": $this -> mensaje = "La seña ha sido registrada correctamente."; break;
 			}
     	 }
 		 public function consulta($id, $mensaje) {

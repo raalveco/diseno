@@ -66,6 +66,11 @@
                 if($fl["val"]==utf8_encode("Diseño gráfico (tipo)")){
                     $pedido -> diseno_tipo = $fl[0];
                 }
+				
+				$pedido -> correo = "lizaolaa@gmail.com";
+				$pedido -> crm_cifrado = sha1($pedido -> crm_numero);
+				
+				$pedido -> guardar();
             }
             
             return $pedido;

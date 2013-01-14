@@ -1,0 +1,24 @@
+<?php Load::lib("html") ?>
+<?= isset($mensaje) ? '<div class="alert alert-success" style="margin: 0px auto 30px; width: 90%;">' . $mensaje . "</div>" : "" ?>
+<div class="container">
+	<table border="1" cellpadding="5" cellspacing="1" class="table table-bordered table-striped">
+		<tr>
+			<th>Pedido ID</th>
+			<th>Tipo</th>
+			<th>Sucursal</th>
+			<th>Importe</th>
+			<th>Numero de Transferencia</th>
+			<th>Fecha</th>
+		</tr>
+		<?php if($anticipos) foreach($anticipos as $anticipo){ ?>
+		<tr>
+			<td><?= $anticipo -> pedido_id ?></td>
+			<td><?= $anticipo -> tipo ?></td>
+			<td><?= $anticipo -> sucursal ?></td>
+			<td><?= $anticipo -> importe ?></td>
+			<td><?= $anticipo -> numero ?></td>
+			<td><?= $anticipo -> fecha ?></td>
+		</tr>
+		<?php } ?>
+	</table>	
+</div>
