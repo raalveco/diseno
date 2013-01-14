@@ -10,6 +10,15 @@
 	           		<?= Formulario::mayusculas("crm_numero", "") ?>
 	            </div>
 	        </div>
+	        <div class="control-group">
+	            <label class="control-label">Tipo de Diseño: </label>
+	            <div class="controls">
+	            	<?php 
+	            		$tipos = array("PP" => "Preprensa", "ND" => "Nuevo Diseño");
+	            	?>
+	           		<?= Formulario::select("tipo", $tipos, "", "placeholder: Selecciona Tipo") ?>
+	            </div>
+	        </div>
 	        <div class="form-actions" align="middle">
 	        	<?= Formulario::submit("Enviar","style: font-weight: bold;","class: btn btn-success") ?>
           	</div>

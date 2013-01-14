@@ -13,6 +13,8 @@
 			else{
 				$pedido = Pedido::consultar(("crm_numero = '".$this -> post("crm_numero")."'"));
 			}
+			$pedido -> tipo_diseno = $this -> post("tipo");
+			$pedido -> guardar();
 			$this -> pedidoInfo = $pedido;				
 		}
 		
@@ -24,8 +26,8 @@
 			$headers = 'From: Ramiro <raalveco@gmail.com>' . "\r\n" .
     					'Reply-To: lizaolaa@gmail.com' . "\r\n";
 			
-			mail($pedido -> correo, $titulo, $message, $headers);
-			
+			mail($pedido -> correo, $titulo, $mensaje, $headers);
+			$this -> redirect("correos/generar/generado");
 					
 		}		
 	}
