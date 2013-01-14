@@ -1,0 +1,628 @@
+body{
+
+	margin: 20px 0;
+
+	font-family: Verdana;
+
+	font-size: 80%;
+
+	background-color: #4d3d28;
+
+	color: #fff;
+
+}
+
+h1,h2,h3,h4{
+
+	margin:0;
+
+}
+
+a{
+
+	color: #fff;
+
+	text-decoration:none;
+
+}
+
+
+
+#contenedor{
+
+	width: 980px;
+
+	margin: 0 auto;
+
+}
+
+
+
+#encabezado{
+
+	padding:0 0 1px 0;
+
+	background: url('../images/mapaargentina.png') no-repeat 930px center;
+
+	display:table;
+
+	width: 100%;
+
+}
+
+#encabezado2{
+
+	padding:0 0 1px 0;
+
+	display:table;
+
+	width: 100%;
+
+}
+
+#encabezado img{
+
+	float:left;
+
+	margin:0 0 10px 10px;
+
+}
+
+encabezado2 img{
+
+	float:left;
+
+	margin:0 0 10px 10px;
+
+}
+
+#encabezado h1{
+
+	display:none;
+
+}
+
+#encabezado2 h1{
+
+	display:none;
+
+}
+
+#encabezado h2{
+
+	font-size: 100%;
+
+	width:160px;
+
+	text-align:right;
+
+	float:right;
+
+	padding:45px 52px 0 0;
+
+}
+
+#encabezado h3{
+
+	font-size: 100%;
+
+	width:260px;
+
+	text-align:left;
+
+	float:left;
+
+	padding:25px 25px 0 0;
+
+}
+
+#encabezado2 h2{
+
+	font-size: 100%;
+
+	width:160px;
+
+	text-align:right;
+
+	float:right;
+
+	padding:45px 52px 0 0;
+
+}
+
+
+#menu{
+
+	list-style:none;
+
+	clear:both;
+
+	border:1px solid #4d3d28;
+
+	margin:0;
+
+	text-align:right;
+
+	padding:0;
+
+}
+
+#menu li{
+
+	display:inline;
+
+	line-height:28px;
+
+	margin-left:2px;
+
+}
+
+#menu li a{
+
+	font-size: 110%;
+
+	padding:7px;
+
+	background-color: #2F2619;
+
+}
+
+#menu li a:hover{
+
+	background-color: #E18D04;
+
+}
+
+#menu li a.menu-seleccionado{
+
+	background-color: transparent;
+
+	cursor: default;
+
+}
+
+
+
+#cuerpo{
+
+
+
+}
+
+#volante{
+
+	background-color: #2F2619;
+
+	padding:20px;
+
+	display:inline-block;
+
+	height:100%;
+
+	width:96%;
+
+}
+
+
+
+#tabla-precios{
+
+	margin-top:20px;
+
+	border-collapse:collapse;
+
+}
+
+#tabla-precios th{
+
+	height:50px;
+
+	padding:5px;
+
+	font-size: 125%;
+
+	width:150px;
+
+}
+
+#tabla-precios td{
+
+	line-height:30px;
+
+	border-bottom:1px solid #4d3d28;
+
+}
+
+.precios-col2{
+
+	text-align:center;
+
+	font-weight:bold;
+
+}
+
+.precios-col3{
+
+	background-color: #E18D04;
+
+	text-align:center;
+
+	font-weight:bold;
+
+}
+
+.destacado{
+
+	font-size: 140%;
+
+}
+
+.destacado2{
+
+	font-size: 190%;
+
+}
+
+
+
+.oferta{
+
+	background-color: #E18D04;
+
+}
+
+
+
+#pida-presupuesto{
+
+	background: url('../images/pidepresu.png') no-repeat right center;
+
+	height:63px;
+
+	padding: 27px 0 0 60px;
+
+	font-size: 190%;
+
+}
+
+
+
+#oferta{
+
+	float:left;
+
+	width:50%;
+
+}
+
+#formulario{
+
+	float:right;
+
+	width:42%;
+
+	background-color: #4D3D28;
+
+	padding:10px;
+
+}
+
+
+#formulario h3{
+
+	font-size: 160%;
+
+	color:#E18D04;
+
+}
+
+#formulario p{font-size: 120%;}
+
+#formulario span{
+
+	display: block;
+
+	padding-left: 87px;
+
+	margin-top:-7px;
+
+}
+
+#Enviar{
+
+	width:111px;
+
+	float:right;
+
+	margin: 20px 30px 0 0;
+
+}
+
+
+
+.texto-naranja{
+
+	font-size: 140%;
+
+	font-weight:bold;
+
+	color:#E18D04;
+
+	margin:-25px 0 20px 0;
+
+}
+
+
+
+#impresiones{
+
+	clear:both;
+
+}
+
+#impresiones h3{
+
+	font-size:160%;
+
+	padding:10px 0 20px 0;
+
+}
+
+.impresion{
+
+	float:left;
+
+	margin-right:15px;
+
+}
+
+.impresion img{
+
+	float:left;
+
+	margin-right:5px;
+
+}
+
+.impresion span{
+
+	font-size:80%;
+
+}
+
+
+
+#frases{
+
+	display:table;
+
+	height:100%;
+
+	margin: 0 auto;
+
+	padding: 40px  20px 40px 20px;
+
+	border-bottom: 2px solid #2F2619;
+
+}
+
+.frase{
+
+	height:123px;
+
+}
+
+.frase h3{
+
+	font-size:120%;
+
+}
+
+.frase img{
+
+	float:left;
+
+	margin-right:10px;
+
+}
+
+
+
+
+
+#pie{
+
+	padding: 30px 0 0 0;
+
+}
+
+#pie h3{
+
+	padding: 0 0 10px 0;
+
+	color:#E18D04;
+
+	font-size:140%;
+
+}
+
+#pie ol{
+
+	padding: 0 0 0 20px;
+
+	margin: 0;
+
+	font-weight:bold;
+
+}
+
+.naranja{
+
+	color:#E18D04;
+
+}
+
+
+
+.izquierda{
+
+	float:left;
+
+	width:48%;
+
+}
+
+.derecha{
+
+	float:right;
+
+	width:44%;
+
+}
+
+
+
+#form_upload label{
+	display:block;
+	font-family:arial,sans-serif;
+	font-size:14px;
+	padding:10px 0 3px;
+}
+
+#form_upload [name=comentario] {
+	width: 700px;
+	height: 200px;
+}
+
+#notify {
+        position: absolute;
+        margin-left: auto;
+        margin-right: auto;
+        margin-top:-20px;
+        left:0;
+        right:0;
+        width:100%;
+        font-size: 15px;
+        text-align: center;
+        z-index: 10000;
+}
+
+.notify-error {
+        background-color: red;
+        color: white;
+        border: 1px solid red;
+}
+
+.notify-info {
+        background-color: #95CBFF;
+        color: black;
+        border: 1px solid blue;
+}
+
+#com {
+	width: 500px;
+	height: 200px;
+	border: 1px solid white;
+	padding: 5px;
+}
+
+#email {
+	border: 1px solid white;
+	padding: 5px;
+	width: 300px;
+}
+
+#colleft {
+	float: left;
+}
+
+#colright {
+	background-color: #4B6ABF;
+	border: 1px solid #1C51E3;
+	float: right;
+	width: 40%;
+}
+
+#response li {
+	padding: 5px;
+}
+
+.b {
+	font-weight: bold;
+}
+
+.attach {
+	width: 150px;
+	background-color: white;
+	color: black;
+}
+
+.attach img {
+	float:left;
+}
+
+#SWFUpload_0 {
+	width: 150px;
+}
+
+.btn {
+	padding: 5px;
+	font-size: 20px;
+	border: 3px solid #4BBF65;
+	background-color: white;
+	color: black;
+}
+
+.btn:hover {
+	background-color: #E18D04;
+}
+
+.error {
+	background-color: red;
+	padding: 5px;
+	font-size: 12px;
+	font-weight: bold;
+	text-align: center;
+}
+
+
+.lft {
+	float: left;
+}
+
+.rgt {
+	float: right;
+}
+
+.btnsend {
+	display: none;
+}
+
+#colright p {
+	padding-left: 15px;
+	padding-right: 15px;
+}
+
+.q {
+	text-align: center;
+	font-size: 20px;
+	font-weight: bold;
+}
+
+.w {
+	width: 50%;
+}
+
+.c {
+	text-align: center;
+}
+
+.det {
+	font-size: 10px;
+}
+
+#response {
+	list-style: none;
+	padding: 0px;
+	margin: 0px;
+}

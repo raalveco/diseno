@@ -544,7 +544,7 @@
         }
         
         public static function oculto($nombre, $valor){
-            return '<input type="hidden" name="'.$nombre.'" value="'.$valor.'" />';
+            return '<input type="hidden" id="'.$nombre.'" name="'.$nombre.'" value="'.$valor.'" />';
         }
 		
 		public static function titulo($texto, $obligatorio = false){
