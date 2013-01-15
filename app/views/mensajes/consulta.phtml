@@ -1,0 +1,23 @@
+<?php Load::lib("formulario"); ?>
+<?= isset($mensaje) ? '<div class="alert alert-success" style="margin: 0px auto 30px; width: 550px;">' . $mensaje . "</div>" : "" ?>
+<div class="container">
+	<?= Formulario::inicio("mensajes/modificar","consulta","class: form-horizontal well","style: margin: 0px auto 0px; width: 550px;") ?>
+	<?= Formulario::oculto("id", $mensajes -> id) ?>
+		<fieldset>
+			<legend>Modificar Mensaje</legend>
+			<div class="control-group">
+	            <label class="control-label">Codigo: <?= $mensajes -> codigo ?></label>
+	        </div>
+	        <div class="control-group">
+	            <label class="control-label">Mensaje: </label>
+	            <div class="controls">
+	           		<?= Formulario::textarea("mensaje", $mensajes -> mensaje, "style: width: 350px; height: 250px") ?>
+	            </div>
+	        </div>
+	        <div class="form-actions" align="middle">
+	        	<?= Formulario::submit("Modificar","style: font-weight: bold;","class: btn btn-success") ?>
+          	</div>
+		</fieldset>
+	<?= Formulario::fin() ?>	
+	
+</div>

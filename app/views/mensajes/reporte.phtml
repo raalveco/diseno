@@ -1,0 +1,18 @@
+<?php Load::lib("html") ?>
+<?= isset($mensaje) ? '<div class="alert alert-success" style="margin: 0px auto 30px; width: 90%;">' . $mensaje . "</div>" : "" ?>
+<div class="container">
+	<table border="1" cellpadding="5" cellspacing="1" class="table table-bordered table-striped">
+		<tr>
+			<th>Codigo de Mensaje</th>
+			<th></th>
+			<th></th>
+		</tr>
+		<?php if($mensajes) foreach($mensajes as $mensaje){ ?>
+		<tr>
+			<td><?= $mensaje -> codigo ?></td>
+			<th style="text-align: center"><?= Html::link("mensajes/consulta/".$mensaje -> id, html::imagen("miniconos/page_white_edit.png")) ?> </th>
+			<th style="text-align: center"><?= Html::link("mensajes/eliminar/".$mensaje -> id, html::imagen("miniconos/cancel.png")) ?></th>
+		</tr>
+		<?php } ?>
+	</table>	
+</div>
