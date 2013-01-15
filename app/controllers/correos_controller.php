@@ -8,6 +8,7 @@
 		
 		public function enviar(){
 			if(!Pedido::existe("crm_numero = '".$this -> post("crm_numero")."'")){
+				//$pedido = Pedido::cargarCRM($this -> post("crm_numero"));
 				$pedido = Pedido::cargarArchivo($this -> post("crm_numero") ,APP_PATH."/public/files/saleorder.xml");
 			}
 			else{
@@ -28,7 +29,6 @@
 			
 			mail($pedido -> correo, $titulo, $mensaje, $headers);
 			$this -> redirect("correos/generar/generado");
-					
 		}
 	}
 ?>
