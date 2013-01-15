@@ -1,7 +1,7 @@
 <?php Load::lib("formulario"); ?>
-<?= isset($mensaje) ? '<div class="alert alert-success" style="margin: 0px auto 30px; width: 550px;">' . $mensaje . "</div>" : "" ?>
+<?= isset($mensaje) ? '<div class="alert alert-success" style="margin: 0px auto 30px; width: 800px;">' . $mensaje . "</div>" : "" ?>
 <div class="container">
-	<?= Formulario::inicio("mensajes/guardar","consulta","class: form-horizontal well","style: margin: 0px auto 0px; width: 550px;") ?>
+	<?= Formulario::inicio("mensajes/guardar","consulta","class: form-horizontal well","style: margin: 0px auto 0px; width: 800px;") ?>
 		<fieldset>
 			<legend>Nuevo Mensaje</legend>
 			<div class="control-group">
@@ -13,7 +13,7 @@
 	        <div class="control-group">
 	            <label class="control-label">Mensaje: </label>
 	            <div class="controls">
-	           		<?= Formulario::textarea("mensaje", "", "style: width: 350px; height: 250px") ?>
+	           		<?= Formulario::richtext("mensaje", "", 500, 300) ?>
 	            </div>
 	        </div>
 	        <div class="form-actions" align="middle">
