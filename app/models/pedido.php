@@ -1,6 +1,27 @@
 <?php
     class Pedido extends ActiveRecord{
         var $xml;
+		
+		public static function consultarCorreo($id){
+			$pedido = Pedido::consultar($id);
+			
+			$xml_contact = simplexml_load_file("https://crm.zoho.com/crm/private/xml/Contacts/getRecordById?authtoken=".CRM_TOKEN."&scope=crmapi&newFormat=2&selectColumns=All&id=".$pedido -> crm_contact,'SimpleXMLElement', LIBXML_NOCDATA);
+					
+			$tmp_contact = $xml_contact -> result -> Contacts -> row;
+			
+			foreach($tmp_contact -> FL as $fl_contact){
+				if($fl_contact[0] == "null") $fl_contact[0] = "";
+				
+				if($fl_contact["val"]==utf8_encode("Email")){
+                    $pedido -> correo = $fl_contact[0];
+					break;
+                }
+			}
+			
+			$pedido -> guardar();
+			
+			return $pedido;
+		}
         
         public static function cargar($ov, $xml){
             if(Pedido::existe("crm_id = '".$ov."'")){
@@ -32,7 +53,6 @@
                 }
 				
 				if($fl["val"]==utf8_encode("CONTACTID")){
-					/*
 					$xml_contact = simplexml_load_file("https://crm.zoho.com/crm/private/xml/Contacts/getRecordById?authtoken=".CRM_TOKEN."&scope=crmapi&newFormat=2&selectColumns=All&id=".$fl[0],'SimpleXMLElement', LIBXML_NOCDATA);
 					
 					$tmp_contact = $xml_contact -> result -> Contacts -> row;
@@ -46,9 +66,7 @@
 		                }
 					}
 					
-					*/
-					
-					$pedido -> correo = "lizaolaa@gmail.com";
+					$pedido -> crm_contact = $fl[0];
 				}
                 
                 if($fl["val"]==utf8_encode("Contact Name")){
@@ -95,78 +113,85 @@
             return $pedido;
         }
 
-		public static function cargarPedidos($xml){
-				
-			$xml = simplexml_load_string($xml,'SimpleXMLElement', LIBXML_NOCDATA);
-            
+		public static function cargarPedidosCRM(){
+			
+			$xml = simplexml_load_file("https://crm.zoho.com/crm/private/xml/SalesOrders/getRecords?authtoken=".CRM_TOKEN."&scope=crmapi&newFormat=2&fromIndex=1&toIndex=100&sortColumnString=Created Time&sortOrderString=desc&selectColumns=All");
+			
             $tpx = $xml -> result -> SalesOrders;
 			
 			foreach($tpx as $tmp){
 				
 				foreach($tmp as $row){
 					
-					$pedido = new Pedido();
-				
+					if(Pedido::existe("crm_id = '".$row -> FL[0]."'")){
+						$pedido = Pedido::consultar("crm_id = '".$row -> FL[0]."'");
+					}
+					else{
+						$pedido = new Pedido();
+					}
+					
 					foreach($row -> FL as $fl){
 					
-	            	if($fl[0] == "null") $fl[0] = "";
-					
-	                if($fl["val"]==utf8_encode("SALESORDERID")){
-						echo $fl[0]."<br>";
+		            	if($fl[0] == "null") $fl[0] = "";
 						
-	                    $pedido -> crm_id = $fl[0];
-	                }
-	                
-	                if($fl["val"]==utf8_encode("SO Number")){
-	                    $pedido -> crm_numero = $fl[0];
-	                }
-	                
-	                if($fl["val"]==utf8_encode("Due Date")){
-	                    $pedido -> fecha_vencimiento = $fl[0];
-	                }
+		                if($fl["val"]==utf8_encode("SALESORDERID")){
+		                    $pedido -> crm_id = $fl[0];
+		                }
+		                
+		                if($fl["val"]==utf8_encode("SO Number")){
+		                    $pedido -> crm_numero = $fl[0];
+		                }
+		                
+		                if($fl["val"]==utf8_encode("Due Date")){
+		                    $pedido -> fecha_vencimiento = $fl[0];
+		                }
+						
+						if($fl["val"]==utf8_encode("CONTACTID")){
+							$pedido -> crm_contact = $fl[0];
+							$pedido -> correo = "pruebas@masfolletospormenos.com.ar";
+						}	
+						
+						if($fl["val"]==utf8_encode("Contact Name")){
+		                    $pedido -> nombre = $fl[0];
+		                }
+		                
+		                if($fl["val"]==utf8_encode("Anticipo necesario")){
+		                    $pedido -> anticipo_minimo = $fl[0];
+		                }
+		                
+		                if($fl["val"]==utf8_encode("Sub Total")){
+		                    $pedido -> total = $fl[0];
+		                }
+		                
+		                if($fl["val"]==utf8_encode("Adjustment")){
+		                    $pedido -> anticipo = $fl[0];
+		                }
+		                
+		                if($fl["val"]==utf8_encode("Grand Total")){
+		                    $pedido -> saldo = $fl[0];
+		                }
+		                
+		                if($fl["val"]==utf8_encode("Diseño gráfico")){
+		                    $pedido -> diseno_grafico = $fl[0];
+		                }
+		                
+		                if($fl["val"]==utf8_encode("Diseño gráfico (estado)")){
+		                    $pedido -> diseno_estado = $fl[0];
+		                }
+		                
+		                if($fl["val"]==utf8_encode("Diseño gráfico (detalle)")){
+		                    $pedido -> diseno_detalle = $fl[0];
+		                }
+		                
+		                if($fl["val"]==utf8_encode("Diseño gráfico (tipo)")){
+		                    $pedido -> diseno_tipo = $fl[0];
+		                }
+						
+						$pedido -> correo = "lizaolaa@gmail.com";
+						$pedido -> crm_cifrado = sha1($pedido -> crm_numero);
 					
-					if($fl["val"]==utf8_encode("Contact Name")){
-	                    $pedido -> nombre = $fl[0];
-	                }
-	                
-	                if($fl["val"]==utf8_encode("Anticipo necesario")){
-	                    $pedido -> anticipo_minimo = $fl[0];
-	                }
-	                
-	                if($fl["val"]==utf8_encode("Sub Total")){
-	                    $pedido -> total = $fl[0];
-	                }
-	                
-	                if($fl["val"]==utf8_encode("Adjustment")){
-	                    $pedido -> anticipo = $fl[0];
-	                }
-	                
-	                if($fl["val"]==utf8_encode("Grand Total")){
-	                    $pedido -> saldo = $fl[0];
-	                }
-	                
-	                if($fl["val"]==utf8_encode("Diseño gráfico")){
-	                    $pedido -> diseno_grafico = $fl[0];
-	                }
-	                
-	                if($fl["val"]==utf8_encode("Diseño gráfico (estado)")){
-	                    $pedido -> diseno_estado = $fl[0];
-	                }
-	                
-	                if($fl["val"]==utf8_encode("Diseño gráfico (detalle)")){
-	                    $pedido -> diseno_detalle = $fl[0];
-	                }
-	                
-	                if($fl["val"]==utf8_encode("Diseño gráfico (tipo)")){
-	                    $pedido -> diseno_tipo = $fl[0];
-	                }
-					
-					$pedido -> correo = "lizaolaa@gmail.com";
-					$pedido -> crm_cifrado = sha1($pedido -> crm_numero);
-					
-					
-	            }
-				$pedido -> guardar();
+	            	}
+					$pedido -> guardar();
 	            }
             }
         }

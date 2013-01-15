@@ -1,0 +1,30 @@
+<?php Load::lib("formulario"); ?>
+<div class="container">
+	<?= Formulario::inicio("pedidos/confirmarCorreo/".$pedidoInfo -> id,"consulta","class: form-horizontal well","style: margin: 0px auto 0px; width: 420px;") ?>	
+		<fieldset>
+			<legend>Informacion de Pedido</legend>
+			<div class="control-group">
+	            <table border="0" style="width: 400px">
+					<td style="width: 40%">Orden de Venta: </td>
+					<td><?= $pedidoInfo -> crm_numero ?></td>
+				</table>
+				<table border="0" style="width: 400px">
+					<td style="width: 40%">Tipo de Diseño: </td>
+					<td><?= $pedidoInfo -> tipo_diseno ?></td>
+				</table>
+				<table border="0" style="width: 400px">
+					<td style="width: 40%">Cliente: </td>
+					<td><?= $pedidoInfo -> nombre ?></td>
+				</table>
+				<table border="0" style="width: 400px">
+					<td style="width: 40%">Correo: </td>
+					<td><?= $pedidoInfo -> correo ?></td>
+				</table>
+				<br />
+				<table border="0" style="width: 400px">
+					<td style="width: 40%"></td>
+					<td style="text-align: right"><?= Formulario::submit("Enviar","style: font-weight: bold;","class: btn btn-success") ?></td>
+				</table>
+		</fieldset>
+	<?= Formulario::fin() ?>
+</div>
