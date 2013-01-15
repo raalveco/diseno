@@ -898,13 +898,6 @@ function textarea_tag($name, $value=null){
 	}
 	
 	$value = htmlspecialchars($value, ENT_QUOTES, APP_CHARSET);
-	
-	if(!isset($params['rows'])) {
-		$params['rows'] = '25';
-	}
-	if(!isset($params['cols'])) {
-		$params['cols'] = '50';
-	}
 
 	$code = xhtml_start_tag('textarea', $params);
 	$code.= $value;

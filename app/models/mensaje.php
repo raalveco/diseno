@@ -1,7 +1,8 @@
 <?php
 	class Mensaje extends ActiveRecord{
 		public static function get($codigo){
-			return Mensaje::consultar("codigo = '".$codigo."'") -> mensaje;
+		    $mensaje = Mensaje::consultar("codigo = '".$codigo."'");
+			return $mensaje ? $mensaje -> mensaje : "MENSAJE NO CONFIGURADO";
 		}
 	}
 ?>

@@ -18,7 +18,7 @@
 			$this -> pedidoInfo = $pedido;				
 		}
 		
-		public function comfirmar($id){
+		public function confirmar($id){
 			$this -> render(null, null);
 			$pedido = Pedido::consultar($id);
 			$titulo = "Configurar Pedido";
@@ -29,6 +29,6 @@
 			mail($pedido -> correo, $titulo, $mensaje, $headers);
 			$this -> redirect("correos/generar/generado");
 					
-		}		
+		}
 	}
 ?>

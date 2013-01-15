@@ -66,28 +66,14 @@
 		
 		public function cargar(){
 			$this -> render(null,null);
-			
+            
 			$pedido = Pedido::consultar($this -> post("pedido"));
 			
-			echo $this -> post("pedido")."<br>";
-			echo $this -> post("caras")."<br>";
-			
-			echo $this -> post("comentarios")."<br>";
-			echo $this -> post("ordenventa")."<br>";
-			echo $this -> post("archivo")."<br>";
-			
 			Load::lib("pclzip");
-			
-			$nombre = $pedido -> crm_numero.".zip";
-			
-			$directorio = substr($_SERVER["SCRIPT_FILENAME"],0,strrpos($_SERVER["SCRIPT_FILENAME"],"/"))."/files/uploads/originales/";
-			$url = $directorio.$nombre;
-			
-			//$directorio = APP_PATH."public/files/uploads/originales/";
-			//$url = $directorio.$nombre;
-			
-			echo $directorio."<br>";
-			echo $url."<br>";
+            $nombre = $pedido -> crm_numero.".zip";
+            
+			$directorio = substr($_SERVER["SCRIPT_FILENAME"],0,strrpos($_SERVER["SCRIPT_FILENAME"],"/"));
+			$url = $directorio."/".$nombre;
 			
 			if(file_exists($url)){
 				unlink($url);
@@ -96,30 +82,51 @@
 			if(file_exists(substr($_SERVER["SCRIPT_FILENAME"],0,strrpos($_SERVER["SCRIPT_FILENAME"],"/"))."/img/uploadify/tmp/".$pedido -> crm_numero."/")){
 				$zip = new PclZip($nombre);
 			
-	  			if ($zip->create(substr($_SERVER["SCRIPT_FILENAME"],0,strrpos($_SERVER["SCRIPT_FILENAME"],"/"))."/img/uploadify/tmp/".$pedido -> crm_numero."/") == 0) {
-	    			die('Error : '.$zip->errorInfo(true));
-	  			}
-				
-				print_r($zip);
-				
-				$dir = opendir(substr($_SERVER["SCRIPT_FILENAME"],0,strrpos($_SERVER["SCRIPT_FILENAME"],"/"))."/img/uploadify/tmp/".$pedido -> crm_numero."/"); 
-				
-				echo $dir."<br>";
+                $zip -> create(".");
+            
+	  			$dir = opendir(substr($_SERVER["SCRIPT_FILENAME"],0,strrpos($_SERVER["SCRIPT_FILENAME"],"/"))."/img/uploadify/tmp/".$pedido -> crm_numero."/"); 
 				
 				while ($archivo = readdir($dir)){
 					if($archivo == "." || $archivo == "..") continue;
 					
 					$zip -> add(substr($_SERVER["SCRIPT_FILENAME"],0,strrpos($_SERVER["SCRIPT_FILENAME"],"/"))."/img/uploadify/tmp/".$pedido -> crm_numero."/".$archivo,PCLZIP_OPT_REMOVE_ALL_PATH);
-					echo substr($_SERVER["SCRIPT_FILENAME"],0,strrpos($_SERVER["SCRIPT_FILENAME"],"/"))."/img/uploadify/tmp/".$pedido -> crm_numero."/".$archivo."<br>";
-				}
-				
-				print_r($zip);
+                    
+                    unlink(substr($_SERVER["SCRIPT_FILENAME"],0,strrpos($_SERVER["SCRIPT_FILENAME"],"/"))."/img/uploadify/tmp/".$pedido -> crm_numero."/".$archivo);
+                }
 			}
-			
-			header ("Content-Disposition: attachment; filename=".$nombre."\n\n"); 
-			header ("Content-Type: application/octet-stream");
-			header ("Content-Length: ".filesize($url));
-			readfile($url);
+            
+            if(!file_exists($directorio."/files/repositorios/")){
+                mkdir($directorio."/files/repositorios/");
+                mkdir($directorio."/files/repositorios/originales/");
+                mkdir($directorio."/files/repositorios/listos/");
+            }
+            
+            if(!file_exists($directorio."/files/repositorios/originales/")){
+                mkdir($directorio."/files/repositorios/originales/");
+            }
+            
+            if(!file_exists($directorio."/files/repositorios/listos/")){
+                mkdir($directorio."/files/repositorios/listos/");
+            }
+            
+            if($this -> post("caras")==0){
+                $nombre2 = $pedido -> crm_numero." [F].zip";
+            }
+            
+            if($this -> post("caras")==1){
+                $nombre2 = $pedido -> crm_numero." [FYF].zip";
+            }
+            
+            if(strtoupper($this -> post("tipo_folleto"))=="DA"){
+                rename($directorio."/".$nombre,$directorio."/files/repositorios/listos/".$nombre2);
+            }
+            else{
+                rename($directorio."/".$nombre,$directorio."/files/repositorios/originales/".$nombre2);
+            }
+            
+            if(file_exists(substr($_SERVER["SCRIPT_FILENAME"],0,strrpos($_SERVER["SCRIPT_FILENAME"],"/"))."/img/uploadify/tmp/".$pedido -> crm_numero."/")){
+                rmdir(substr($_SERVER["SCRIPT_FILENAME"],0,strrpos($_SERVER["SCRIPT_FILENAME"],"/"))."/img/uploadify/tmp/".$pedido -> crm_numero."/");
+            }
 		}
 		
 		public function error($archivo, $mensaje){

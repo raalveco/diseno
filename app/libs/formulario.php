@@ -11,7 +11,7 @@
 	 */
 	class Formulario{
 		
-		public static function inicio($accion,$x=0){
+		public static function inicioNoValidado($accion,$x=0){
 			$params = is_array($accion) ? $accion : Util::getParams(func_get_args());
 			
 			$params["enctype"] = "multipart/form-data";
@@ -31,11 +31,36 @@
                 $opciones .= ', beforeSubmit: function() { '.$params["before"].' }';
             }
             
-            $code = '<script type="text/javascript"> $.metadata.setType("attr", "validate"); $(document).ready(function() { $("#'.$params["id"].'").validate({}); }); </script>';
-            $code .= form_tag($params);
+            $code = form_tag($params);
 			
             return $code;
 		}
+        
+        public static function inicio($accion,$x=0){
+            $params = is_array($accion) ? $accion : Util::getParams(func_get_args());
+            
+            $params["enctype"] = "multipart/form-data";
+            
+            if($x==0) $x = rand(0,9999999);
+            
+            $params["name"] = "f".$x;
+            $params["id"] = "f".$x;
+            
+            $opciones = '';
+            
+            if(isset($params["success"])){
+                $opciones .= ', success: function() { '.$params["success"].' }';
+            }
+            
+            if(isset($params["before"])){
+                $opciones .= ', beforeSubmit: function() { '.$params["before"].' }';
+            }
+            
+            $code = '<script type="text/javascript"> $.metadata.setType("attr", "validate"); $(document).ready(function() { $("#'.$params["id"].'").validate({}); }); </script>';
+            $code .= form_tag($params);
+            
+            return $code;
+        }
 		
 		public static function inicioAjax($accion, $contenedor,$referencia=0){
 			$params = is_array($accion) ? $accion : Util::getParams(func_get_args());
@@ -541,6 +566,27 @@
 			$params[1] = $valor;
         	
         	return textarea_tag($params);
+        }
+        
+        public static function richtext($nombre,$valor="", $width = 600, $height = 450, $oscuro = true){
+            $params = is_array($nombre) ? $nombre : Util::getParams(func_get_args());
+            
+            $params["name"] = $nombre;
+            $params["id"] = $nombre;
+            $params[1] = $valor;
+            
+            $template = $oscuro ? 'background-color: #383C41; color: #EEE' : 'background-color: #EEE; color: #111';
+            
+             $cleditor = stylesheet_link_tag('jquery/jquery.cleditor');
+             $cleditor .= javascript_include_tag('jquery/jquery-1.4.2.min')."\n";
+             $cleditor .= javascript_include_tag('jquery/jquery.cleditor.min')."\n";
+             $cleditor .= '<script type="text/javascript">
+                $(document).ready(function() {
+                    $("#'.$nombre.'").cleditor({width: '.$width.', height: '.$height.', bodyStyle: "'.$template.'"})[0].focus();
+                });
+              </script>';
+            
+            return $cleditor."\n".textarea_tag($params);
         }
         
         public static function oculto($nombre, $valor){

@@ -1,0 +1,17 @@
+<?= Load::lib("formulario") ?>
+<center>
+    <?= Formulario::inicioNoValidado("configuracion/editarMensaje") ?>
+    <table border="0" cellpadding="5" cellspacing="1">
+        <tr>
+            <th>
+                <?= $mensaje -> codigo ?>
+            </th>
+        </tr>
+        <tr>
+            <td align="center">
+                <?= Formulario::richtext("mensaje",$mensaje -> mensaje,640,480,false); ?>
+            </td>
+        </tr>
+    </table>
+    <?= Formulario::fin() ?>
+</center>

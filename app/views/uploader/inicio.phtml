@@ -52,7 +52,7 @@
 					
 					$('#boton').show();
 					
-					<?= $tipo_folleto == "pp" ? "$('#file_upload').hide();" : "" ?>
+					<?= $tipo_folleto != "pp" ? "$('#file_upload').hide();" : "" ?>
 					
 					$('#archivo').val(res.file);
 					
@@ -198,6 +198,7 @@ $(document).ready(function(){
 		<?= Formulario::oculto("comentarios", "") ?>
 		<?= Formulario::oculto("ordenventa", "") ?>
 		<?= Formulario::oculto("archivo", "") ?>
+		<?= Formulario::oculto("tipo_folleto", $tipo_folleto) ?>
 	 <div class="modal-header" align="center">
 	 	<button type="button" class="close" data-dismiss="modal" aria-hidden="true">x</button>
 	 	<h3 id="myModalLabel"><?= Mensajes::consultar("DISENO_CASI_LISTO") ?></h3>
