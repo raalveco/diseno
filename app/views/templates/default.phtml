@@ -7,12 +7,15 @@
 		<meta http-equiv="imagetoolbar" content="no" />
 		
 		<?= stylesheet_link_tag('style') ?>
+		<?= stylesheet_link_tag('jquery/jquery.cleditor') ?> 
 		
 		<?= View::partial("jquery",false,'template: ui-darkness, version: 13'); ?>
         
         <?= javascript_include_tag('kumbia/validations') ?>
 		<?= javascript_include_tag('amecasoft') ?>
 		<?= javascript_include_tag('bootstrap') ?>
+		
+		<?= javascript_include_tag('jquery/jquery.cleditor.min')."\n" ?>
 		<style type="text/css">
 		    body{
 		        padding-top: 25px;

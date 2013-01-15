@@ -3,6 +3,7 @@
 	session_start();
 	
 	require_once("upload_errors.php");
+	
 	$targetFolder = '/diseno/app/public/img/uploadify/tmp'; // Relative to the root
 	
 	$verifyToken = md5('unique_salt' . $_POST['timestamp']);
@@ -36,9 +37,11 @@
 	if (in_array($fileParts['extension'],$fileTypes)) {
 		
 		if($_FILES['Filedata']["size"]<150000){
-			echo imprimirError($filename, "RESOLUCION");
+			echo imprimirError($filename, "ERROR_RESOLUCION");
 			exit;
 		}
+		
+		//MAS VALIDACIONES DEL DISEÑO
 		
 		move_uploaded_file($tempFile,$targetFile);
 		

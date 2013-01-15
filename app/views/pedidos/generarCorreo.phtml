@@ -1,0 +1,27 @@
+<?php Load::lib("formulario"); ?>
+<?= isset($mensaje) ? '<div class="alert alert-success" style="margin: 0px auto 30px; width: 420px;">' . $mensaje . "</div>" : "" ?>
+<div class="container">
+	<?= Formulario::inicio("pedidos/enviarCorreo","consulta","class: form-horizontal well","style: margin: 0px auto 0px; width: 420px;") ?>
+		<fieldset>
+			<legend>Generacion de Pedido</legend>
+			<div class="control-group">
+	            <label class="control-label">Orden de Venta: </label>
+	            <div class="controls">
+	           		<?= Formulario::numerico("crm_numero", $pedido -> crm_numero) ?>
+	            </div>
+	        </div>
+	        <div class="control-group">
+	            <label class="control-label">Tipo de Diseño: </label>
+	            <div class="controls">
+	            	<?php 
+	            		$tipos = array("PP" => "Preprensa", "ND" => "Nuevo Diseño");
+	            	?>
+	           		<?= Formulario::select("tipo", $tipos, "", "placeholder: Selecciona Tipo") ?>
+	            </div>
+	        </div>
+	        <div class="form-actions" align="middle">
+	        	<?= Formulario::submit("Enviar","style: font-weight: bold;","class: btn btn-success") ?>
+          	</div>
+		</fieldset>
+	<?= Formulario::fin() ?>
+</div>

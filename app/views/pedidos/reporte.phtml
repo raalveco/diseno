@@ -1,16 +1,21 @@
 <?php Load::lib("html") ?>
+<?php Load::lib("formulario") ?>
 <?= isset($mensaje) ? '<div class="alert alert-success" style="margin: 0px auto 30px; width: 90%;">' . $mensaje . "</div>" : "" ?>
 <div class="container">
 	<table border="1" cellpadding="5" cellspacing="1" class="table table-bordered table-striped">
 		<tr>
-			<th>Orden de Venta</th>
-			<th>Nombre</th>
-			<th>Total</th>
-			<th>Anticipo</th>
-			<th>Saldo</th>
-			<th></th>
-			<th></th>
-			<th></th>
+			<th style="padding-top: 10px; text-align: center;"><br>Orden de Venta</th>
+			<th style="padding-top: 10px; text-align: center;"><br>Nombre</th>
+			<th style="padding-top: 10px; text-align: center;"><br>Total</th>
+			<th style="padding-top: 10px; text-align: center;"><br>Anticipo</th>
+			<th style="padding-top: 10px; text-align: center;"><br>Saldo</th>
+			<th colspan="3" style="text-align: center; vertical-align: middle;"><br>
+				<?php if($crm){ ?>
+					<?= Formulario::inicio("pedidos/actualizarCRM") ?>
+						<?= Formulario::submit("Consultar CRM","class: btn btn-success") ?>
+					<?= Formulario::fin(); ?>
+				<?php } ?>
+			</th>
 		</tr>
 		<?php if($pedidos) foreach($pedidos as $pedido){ ?>
 		<tr>
@@ -19,8 +24,15 @@
 			<td><?= $pedido -> total ?></td>
 			<td><?= $pedido -> anticipo ?></td>
 			<td><?= $pedido -> saldo ?></td>
-			<th style="text-align: center"><?= Html::link("anticipos/registro/".$pedido -> id ."/".$pedido -> crm_numero, "Registrar Seña") ?> </th>
-			<th style="text-align: center"><?= Html::link("pedidos/consulta/".$pedido -> id, html::imagen("miniconos/page_white_edit.png")) ?> </th>
+			<th style="text-align: center">
+				<?php if($crm){ ?>
+					<?= Html::link("pedidos/generarCorreo/".$pedido -> id, "Enviar Correo") ?> </th>
+				<?php } else { ?>
+					<?= Html::link("anticipos/registro/".$pedido -> id ."/".$pedido -> crm_numero, "Registrar Seña") ?> </th>
+				<?php } ?>
+			<th style="text-align: center">
+				<?= Html::link("pedidos/consulta/".$pedido -> id, html::imagen("miniconos/page_white_edit.png")) ?>
+			</th>
 			<th style="text-align: center"><?= Html::link("pedidos/eliminar/".$pedido -> id, html::imagen("miniconos/cancel.png")) ?></th>
 		</tr>
 		<?php } ?>
