@@ -1,34 +1,35 @@
 <?php
 	class CorreosController extends ApplicationController{
-		public function generar($mensaje = false){
-			if($mensaje){
-				$this -> mensaje = "El mensaje ha sido enviado correctamente";
-			}				
-		}
-		
-		public function enviar(){
-			if(!Pedido::existe("crm_numero = '".$this -> post("crm_numero")."'")){
-				//$pedido = Pedido::cargarCRM($this -> post("crm_numero"));
-				$pedido = Pedido::cargarArchivo($this -> post("crm_numero") ,APP_PATH."/public/files/saleorder.xml");
-			}
-			else{
-				$pedido = Pedido::consultar(("crm_numero = '".$this -> post("crm_numero")."'"));
-			}
-			$pedido -> tipo_diseno = $this -> post("tipo");
-			$pedido -> guardar();
-			$this -> pedidoInfo = $pedido;				
-		}
-		
-		public function confirmar($id){
-			$this -> render(null, null);
-			$pedido = Pedido::consultar($id);
-			$titulo = "Configurar Pedido";
-			$mensaje = 'Hola '.$pedido -> nombre.'. <br><br>Por favor entra aquí para subir tu diseño: <br><br><a href="http://127.0.0.1/diseno/uploader/index/'.$pedido -> crm_cifrado.'">Enviar diseño</a><br><br>Numero de pedido: '.$pedido -> crm_numero.'<br><br>Saludos,<br><br>Raul<br>Responsable de ventas';                                       
-			$headers = 'From: Ramiro <raalveco@gmail.com>' . "\r\n" .
-    					'Reply-To: lizaolaa@gmail.com' . "\r\n";
+		public function reporte($mensaje){
+			$this -> correos = Correo::reporte();
 			
-			mail($pedido -> correo, $titulo, $mensaje, $headers);
-			$this -> redirect("correos/generar/generado");
+			switch($mensaje){
+				case "eliminado": $this -> mensaje = "El correo ha sido eliminado correctamente."; break;
+				case "registrado": $this -> mensaje = "El correo ha sido guardado correctamente."; break;
+				case "modificado": $this -> mensaje = "El correo ha sido modificado correctamente."; break;
+			}
 		}
+		
+		public function consulta($id, $mensaje) {
+    		$this -> correo = Correo::consultar($id);
+			
+			switch($mensaje){
+				case "modificado": $this -> mensaje = "El correo ha sido modificado correctamente."; 
+			}
+    	}
+		
+		public function modificar() {
+			$this -> render(null,null);
+			
+    		$correo = Correo::consultar($this -> post("id"));
+			
+			$correo -> remitente = $this -> post("remitente");
+			$correo -> asunto = $this -> post("asunto");
+			$correo -> mensaje = $this -> post("mensaje");			
+			
+			$correo -> guardar();
+			
+			$this -> redirect("correos/reporte/modificado");
+    	}
 	}
 ?>

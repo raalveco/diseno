@@ -87,6 +87,9 @@
 			$this -> render(null, null);
 			$pedido = Pedido::consultar($id);
 			$titulo = "Configurar Pedido";
+			
+			
+			
 			$mensaje = 'Hola '.$pedido -> nombre.'. <br><br>Por favor entra aquí para subir tu diseño: <br><br><a href="http://127.0.0.1/diseno/uploader/index/'.$pedido -> crm_cifrado.'">Enviar diseño</a><br><br>Numero de pedido: '.$pedido -> crm_numero.'<br><br>Saludos,<br><br>Raul<br>Responsable de ventas';                                       
 			$headers = 'From: Ramiro <raalveco@gmail.com>' . "\r\n" .
     					'Reply-To: lizaolaa@gmail.com' . "\r\n";

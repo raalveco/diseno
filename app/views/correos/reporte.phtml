@@ -1,0 +1,18 @@
+<?php Load::lib("html") ?>
+<?= isset($mensaje) ? '<div class="alert alert-success" style="margin: 0px auto 30px; width: 90%;">' . $mensaje . "</div>" : "" ?>
+<div class="container">
+	<table border="1" cellpadding="5" cellspacing="1" class="table table-bordered table-striped">
+		<tr>
+			<th>Codigo de Correo</th>
+			<th>Remitente</th>
+			<th></th>
+		</tr>
+		<?php if($correos) foreach($correos as $correo){ ?>
+		<tr>
+			<td><?= $correo -> codigo ?></td>
+			<td><?= str_replace(">", "&gt;", str_replace("<", "&lt;", $correo -> remitente)) ?></td>
+			<th style="text-align: center"><?= Html::link("correos/consulta/".$correo -> id, html::imagen("miniconos/page_white_edit.png")) ?> </th>
+		</tr>
+		<?php } ?>
+	</table>	
+</div>

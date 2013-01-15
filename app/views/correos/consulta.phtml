@@ -1,0 +1,37 @@
+<?php Load::lib("formulario"); ?>
+<?= isset($mensaje) ? '<div class="alert alert-success" style="margin: 0px auto 30px; width: 550px;">' . $mensaje . "</div>" : "" ?>
+<div class="container">
+	<?= Formulario::inicioNoValidado("correos/modificar","consulta","class: form-horizontal well","style: margin: 0px auto 0px; width: 705px;") ?>
+	<?= Formulario::oculto("id", $correo -> id) ?>
+		<fieldset>
+			<legend>Modificar Correo</legend>
+			<div class="control-group">
+	            <label class="control-label">Codigo: </label>
+	            <div class="controls">
+	            	<?= Formulario::texto("codigo", $correo -> codigo, "style: width: 490px;") ?>
+	            </div>
+	        </div>
+	        <div class="control-group">
+	            <label class="control-label">Remitente: </label>
+	            <div class="controls">
+	           		<?= Formulario::texto("remitente", $correo -> remitente, "style: width: 490px;") ?>
+	            </div>
+	        </div>
+	        <div class="control-group">
+	            <label class="control-label">Asunto: </label>
+	            <div class="controls">
+	           		<?= Formulario::texto("asunto", $correo -> asunto, "style: width: 490px;") ?>
+	            </div>
+	        </div>
+	        <div class="control-group">
+	            <label class="control-label">Mensaje: </label>
+	            <div class="controls">
+	           		<?= Formulario::richtext("mensaje", $correo -> mensaje,500,400, false) ?>
+	            </div>
+	        </div>
+	        <div class="form-actions" style="text-align: right;">
+	        	<?= Formulario::submit("Modificar","style: font-weight: bold;","class: btn btn-success") ?>
+          	</div>
+		</fieldset>
+	<?= Formulario::fin() ?>	
+</div>

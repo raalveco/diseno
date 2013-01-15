@@ -10,6 +10,18 @@
 			return $mensaje;
 		}
 		
+		public static function correo($codigo, $variables = array()){
+			$correo = Correo::get($codigo);
+			
+			if($variables) foreach($variables as $key => $valor){
+				$correo -> remitente = str_replace("[".$key."]", $valor, $correo -> remitente);
+				$correo -> asunto = str_replace("[".$key."]", $valor, $correo -> asunto);
+				$correo -> mensaje = str_replace("[".$key."]", $valor, $correo -> mensaje);
+			}
+			
+			return $mensaje;
+		}
+		
 		function imprimirError($filename, $error = false, $n = 0){
 			switch($error){
 				case "RESOLUCION": $mensaje = "El diseño tiene una resolución muy baja y no se verá bien en la impresión. Por favor envíanos un archivo con al menos 150 DPI de resolución."; break;
