@@ -85,16 +85,16 @@
 		
 		public function confirmarCorreo($id){
 			$this -> render(null, null);
+			
+			Load::lib("mensajes");
+			
 			$pedido = Pedido::consultar($id);
-			$titulo = "Configurar Pedido";
 			
+			$url = "http://www.amecasoft.com.mx/diseno/uploader/index/".$pedido -> crm_cifrado;
+			$variables = array("CONTACTO" => $pedido -> nombre, "URL" => $url,"PEDIDO" => $pedido -> crm_numero);
 			
-			
-			$mensaje = 'Hola '.$pedido -> nombre.'. <br><br>Por favor entra aquí para subir tu diseño: <br><br><a href="http://127.0.0.1/diseno/uploader/index/'.$pedido -> crm_cifrado.'">Enviar diseño</a><br><br>Numero de pedido: '.$pedido -> crm_numero.'<br><br>Saludos,<br><br>Raul<br>Responsable de ventas';                                       
-			$headers = 'From: Ramiro <raalveco@gmail.com>' . "\r\n" .
-    					'Reply-To: lizaolaa@gmail.com' . "\r\n";
-			
-			@mail($pedido -> correo, $titulo, $mensaje, $headers);
+			$correo = Mensajes::correo("CORREO_INICIAL", $variables);
+			$correo -> enviarCorreo("raalveco@gmail.com");
 			
 			$pedido -> enviado = "SI";
 			$pedido -> guardar();

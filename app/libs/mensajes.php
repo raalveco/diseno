@@ -19,7 +19,7 @@
 				$correo -> mensaje = str_replace("[".$key."]", $valor, $correo -> mensaje);
 			}
 			
-			return $mensaje;
+			return $correo;
 		}
 		
 		function imprimirError($filename, $error = false, $n = 0){

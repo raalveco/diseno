@@ -1,29 +1,33 @@
 <?php Load::lib("formulario"); ?>
 <div class="container">
-	<?= Formulario::inicio("pedidos/confirmarCorreo/".$pedidoInfo -> id,"consulta","class: form-horizontal well","style: margin: 0px auto 0px; width: 420px;") ?>	
+	<?= Formulario::inicio("pedidos/confirmarCorreo/".$pedidoInfo -> id,"consulta","class: form-horizontal well","style: margin: 0px auto 0px; width: 450px;") ?>	
 		<fieldset>
 			<legend>Informacion de Pedido</legend>
 			<div class="control-group">
-	            <table border="0" style="width: 400px">
-					<td style="width: 40%">Orden de Venta: </td>
-					<td><?= $pedidoInfo -> crm_numero ?></td>
-				</table>
-				<table border="0" style="width: 400px">
-					<td style="width: 40%">Tipo de Diseño: </td>
-					<td><?= $pedidoInfo -> tipo_diseno ?></td>
-				</table>
-				<table border="0" style="width: 400px">
-					<td style="width: 40%">Cliente: </td>
-					<td><?= $pedidoInfo -> nombre ?></td>
-				</table>
-				<table border="0" style="width: 400px">
-					<td style="width: 40%">Correo: </td>
-					<td><?= $pedidoInfo -> correo ?></td>
-				</table>
-				<br />
-				<table border="0" style="width: 400px">
-					<td style="width: 40%"></td>
+	            <table border="0" cellpadding="5" style="width: 450px">
+	            	<tr>
+						<td>Orden de Venta: </td>
+						<td><?= Formulario::texto("ov",$pedidoInfo -> crm_numero,"style: width: 300px; color: #000;","readonly: readonly") ?></td>
+					</tr>
+					<tr>
+						<td>Tipo de Diseño: </td>
+						<?php 
+		            		$tipos = array("PP" => "Preprensa", "ND" => "Nuevo Diseño");
+		            	?>
+						<td><?= Formulario::select("tipo",$tipos,$pedidoInfo -> tipo_diseno,"style: width: 314px; color: #000;","disabled: disabled") ?></td>
+					</tr>
+				<tr>
+					<td>Cliente: </td>
+					<td><?= Formulario::texto("cliente",$pedidoInfo -> nombre,"style: width: 300px; color: #000;","readonly: readonly") ?></td>
+				</tr>
+				<tr>
+					<td>Correo: </td>
+					<td><?= Formulario::texto("cliente",$pedidoInfo -> correo,"style: width: 300px; color: #000;","readonly: readonly") ?></td>
+				</tr>
+				<tr>
+					<td></td>
 					<td style="text-align: right"><?= Formulario::submit("Enviar","style: font-weight: bold;","class: btn btn-success") ?></td>
+				</tr>
 				</table>
 		</fieldset>
 	<?= Formulario::fin() ?>
