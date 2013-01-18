@@ -1,0 +1,25 @@
+<?php Load::lib("html") ?>
+<?= isset($mensaje) ? '<div class="alert alert-success" style="margin: 0px auto 30px; width: 90%;">' . $mensaje . "</div>" : "" ?>
+<div class="container">
+	<?php if($pedidos){?>
+		<table border="1" cellpadding="5" cellspacing="1" class="table table-bordered table-striped">
+		<tr>
+			<th>Proyecto</th>
+			<th>Tipo</th>
+			<th>Diseñador</th>
+			<th>Acciones</th>			
+		</tr>
+		<?php if($pedidos) foreach($pedidos as $pedido){ ?>
+		<tr>
+			<td><?= $pedido -> crm_numero ?></td>
+			<td><?= $pedido -> diseno_tipo ?></td>
+			<td><?= $pedido -> estado ?></td>
+			<td style="text-align: center"><?= Html::link("disenadores/consulta/".$pedido -> id, "Solicitar") ?></td>
+		</tr>
+		<?php } ?>
+	</table>	
+	<?php } else{ ?>
+		No hay trabajos disponibles por el momento.	
+	<?php } ?>	
+	
+</div>
