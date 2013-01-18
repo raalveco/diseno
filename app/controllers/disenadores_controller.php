@@ -61,5 +61,28 @@
 			
 			$this -> redirect("disenadores/reporte/eliminado");
     	}
+		
+		public function trabajo(){
+			$this -> pedidos = Pedido::reporte("estado = 'DISPONIBLE'");
+			
+		}
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
 	}
 ?>
