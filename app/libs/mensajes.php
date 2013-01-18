@@ -11,6 +11,7 @@
 		}
 		
 		public static function correo($codigo, $variables = array()){
+			echo print_r($variables);
 			$correo = Correo::get($codigo);
 			
 			if($variables) foreach($variables as $key => $valor){

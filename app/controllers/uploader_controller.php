@@ -153,7 +153,7 @@
 			}
 			else{
 				
-				$url = APLICACION_URL."pedidos/anticipo";
+				$url = APLICACION_URL."pedidos/anticipo/".$pedido -> crm_cifrado;
 				
 				$boton = '<a href="'.$url.'" id="boton" class="btn btn-success">Registrar Señar</a>';
 				
@@ -161,7 +161,7 @@
 			
 				$correo = Mensajes::correo("CORREO_CARGADO_NOSENADO",array("CONTACTO" => $pedido -> nombre, "REPOSITORIO" => $repositorio, "PEDIDO" => $pedido -> crm_numero, "CARAS" => $caras, "COMENTARIOS" => $this -> post("comentarios"),"URL" => $url));
 				$correo -> enviarCorreo("raalveco@gmail.com");
-			}
+			}	
 			
 			$pedido -> guardarCRM();
 		}
