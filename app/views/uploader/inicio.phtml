@@ -43,16 +43,20 @@
 					
 					$("#name1").html(res.file);
 					
-					if(res.numero > 1){
-						$("#mensaje").append(res.msg);
-					}
-					else{
-						$("#mensaje").html(res.msg);
-					}
+					$('#temporal').load('<?= get_kumbia_url("uploader/archivo") ?>/'+res.file+'/'+res.msg);
+					
+					setTimeout( function() {
+						if(res.numero > 1){
+							$("#mensaje").append($('#temporal').html());
+						}
+						else{
+							$("#mensaje").html($('#temporal').html());
+						}
+					}, 2000 );
 					
 					$('#boton').show();
 					
-					<?= $tipo_folleto != "pp" ? "$('#file_upload').hide();" : "" ?>
+					<?= $tipo_folleto == "pp" ? "$('#file_upload').hide();" : "" ?>
 					
 					$('#archivo').val(res.file);
 					
@@ -108,6 +112,19 @@ $(document).ready(function(){
 	  $('#file_upload').show();
 
       $("#mensaje").load("<?= APLICACION_PATH ?>uploader/revisar/<?= $pedido -> crm_numero ?>");
+   });
+})
+</script>
+<script>
+$(document).ready(function(){
+   function terminar(){
+		alert("Terminando");
+   	
+      evento.preventDefault();
+      
+      $('#myModal').hide();
+	  $('#myModal2').show();
+
    });
 })
 </script>
@@ -192,7 +209,7 @@ $(document).ready(function(){
 	</div>
 </div>
 <div id="myModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="font-size: 14px;">
-	<?= Formulario::inicio("uploader/cargar","upload","class: form-horizontal well","style: margin: auto; height: 500px;") ?>
+	<?= Formulario::inicio("uploader/cargar","class: form-horizontal well","style: margin: auto;") ?>
 		<?= Formulario::oculto("pedido", $pedido -> id) ?>
 		<?= Formulario::oculto("caras", 2) ?>
 		<?= Formulario::oculto("comentarios", "") ?>
@@ -204,7 +221,7 @@ $(document).ready(function(){
 	 	<h3 id="myModalLabel"><?= Mensajes::consultar("DISENO_CASI_LISTO") ?></h3>
 	 </div>
 	 <div class="modal-body" align="justify">
-	 	<?= Mensajes::consultar("REVISAR_DISENO") ?>
+	 	<?= Mensajes::consultar("DISENO_REVISION") ?>
 	 </div>
 	  <div class="modal-footer">
 	    <button class="btn btn-danger" id="revisar" data-dismiss="modal" aria-hidden="true">Revisar</button>
@@ -217,7 +234,7 @@ $(document).ready(function(){
 		<button type="button" class="close" data-dismiss="modal" aria-hidden="true">
 			x
 		</button>
-		<h3 id="myModalLabel" style="color: yellow; font-weight: bold;"><?= Mensajes::consultar("TITULO_ERROR") ?></h3>
+		<h3 id="myModalLabel" style="color: yellow; font-weight: bold;"><?= Mensajes::consultar("TITULO_ERROR_ARCHIVO") ?></h3>
 	</div>
 	<div id="modal-body" class="modal-body" align="justify"></div>
 	<div class="modal-footer">
@@ -226,3 +243,18 @@ $(document).ready(function(){
 		</button>
 	</div>
 </div>
+<div id="myModal2" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="font-size: 14px;">
+	<div class="modal-header" align="center">
+		<button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+			x
+		</button>
+		<h3 id="myModalLabel" style="color: yellow; font-weight: bold;"><?= Mensajes::consultar("TITULO_CARGADO") ?></h3>
+	</div>
+	<div id="modal-body2" class="modal-body2" align="justify"></div>
+	<div class="modal-footer">
+		<button class="btn btn-success" id="ok" data-dismiss="modal" aria-hidden="true" onclick="terminar()">
+			Aceptar
+		</button>
+	</div>
+</div>
+<div id="temporal" style="display: none;"></div>
