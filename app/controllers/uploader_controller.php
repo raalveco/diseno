@@ -116,10 +116,14 @@
             if($this -> post("caras")==1){
                 $nombre2 = $pedido -> crm_numero." [FYF].zip";
             }
+			
+			$pedido -> originales = $nombre2;
+			$pedido -> descargado = 0;
+			$pedido -> guardar(); 
             
             if(strtoupper($this -> post("tipo_folleto"))=="DA"){
                 rename($directorio."/".$nombre,$directorio."/files/repositorios/listos/".$nombre2);
-				$repositorio = APLICACION_URL."files/repositorioslistos/".$nombre2;
+				$repositorio = APLICACION_URL."files/repositorios/listos/".$nombre2;
             }
             else{
                 rename($directorio."/".$nombre,$directorio."/files/repositorios/originales/".$nombre2);

@@ -1,0 +1,42 @@
+<?php Load::lib("html") ?>
+<?= isset($mensaje) ? '<div class="alert alert-error" style="margin: 0px auto 30px; width: 90%;">' . $mensaje . "</div>" : "" ?>
+<div class="container">
+	<?php if($pedidos){?>
+		<table border="1" cellpadding="5" cellspacing="1" class="table table-bordered table-striped">
+		<tr>
+			<th>Proyecto</th>
+			<th>Tipo</th>
+			<th>Diseñador</th>
+			<th>Acciones</th>			
+		</tr>
+		<?php if($pedidos) foreach($pedidos as $pedido){ ?>
+			<script>
+				function confirmar<?= $pedido -> id ?>(){
+					if(<?= $pedido -> descargado > 0 ? "false" : "true" ?>){
+						alert("¡¡Al menos deberías descargar el archivo!!\n\nSi ya lo hiciste, por favor recarga esta página.");
+						return false;
+					}
+				}
+			</script>
+		<tr>
+			<td><?= $pedido -> crm_numero ?></td>
+			<td><?= $pedido -> tipo_diseno ?> <?= $pedido -> diseno_tipo ?></td>
+			<td>
+				<?= $pedido -> estado == "ASIGNADO" ? Disenador::consultar($pedido -> disenador_id) -> nombre : "Esperando..." ?>
+			</td>
+			<td style="text-align: center">
+				<?php if($pedido -> estado == "DISPONIBLE"){ ?>
+					<?= Html::link("disenadores/consulta/".$pedido -> id, "Solicitar Trabajo") ?>
+				<?php } else { ?>
+					<?= Html::link("disenadores/descargar/".$pedido -> crm_cifrado,"BAJAR") ?> |
+					<?= Html::link("disenadores/trabajo/".$pedido -> crm_cifrado."/OK","OK", "onclick: return confirmar".$pedido -> id."();") ?> | 
+					<?= Html::link("disenadores/trabajo/".$pedido -> crm_cifrado."/NOOK","NO OK", "onclick: return confirmar".$pedido -> id."();") ?>
+				<?php } ?>
+			</td>
+		</tr>
+		<?php } ?>
+	</table>	
+	<?php } else{ ?>
+		No hay trabajos disponibles por el momento.	
+	<?php } ?>	
+</div>
