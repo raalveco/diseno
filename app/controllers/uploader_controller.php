@@ -12,7 +12,7 @@
 				
 				if($pedido -> diseno_estado){
 					
-					$this -> mensaje = Mensajes::consultar("ES_DA");
+					$this -> mensaje = Mensajes::consultar("MENSAJES_ARCHIVOS_PRECARGADOS");
 				}
 				else{
 					$this -> render(null,null);
