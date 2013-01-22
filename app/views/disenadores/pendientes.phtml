@@ -28,11 +28,11 @@
 				<?php if($pedido -> estado == "DISPONIBLE"){ ?>
 					<?= Html::link("disenadores/consulta/".$pedido -> crm_cifrado, "Solicitar Trabajo") ?>
 				<?php } else { ?>
-					<?= Html::link("disenadores/descargar/".$pedido -> crm_cifrado,"BAJAR") ?> |
+					<?= Html::link("disenadores/descargar/".$pedido -> crm_cifrado,"BAJAR") ?>
 					<?php if($pedido -> estado == "DISEÑO"){ ?>
-						<?= Html::link("disenadores/upload/".$pedido -> crm_cifrado, "SUBIR") ?>
+						
 					<?php } else { ?>
-						<?= Html::link("disenadores/trabajo/".$pedido -> crm_cifrado."/OK","OK", "onclick: return confirmar".$pedido -> id."();") ?> | 
+						| <?= Html::link("disenadores/trabajo/".$pedido -> crm_cifrado."/OK","OK", "onclick: return confirmar".$pedido -> id."();") ?> | 
 						<?= Html::link("disenadores/trabajo/".$pedido -> crm_cifrado."/NOOK","NO OK", "onclick: return confirmar".$pedido -> id."();") ?>
 					<?php } ?>
 				<?php } ?>
@@ -44,7 +44,7 @@
 		No hay trabajos disponibles por el momento.	
 	<?php } ?>	
 </div>
-
+<?php if($pedido -> estado == "DISEÑO"){ ?>
 <?= Load::lib("formulario") ?>
 <?= Load::lib("mensajes") ?>
 <style type="text/css">
@@ -117,6 +117,8 @@
 						});
 					}, 1000 );
 				}
+				
+				confirmar();
     		},
 			'swf'      : '<?= PUBLIC_PATH ?>uploadify.swf',
 			'uploader' : '<?= PUBLIC_PATH ?>uploadify.php'
@@ -128,25 +130,10 @@
 	function confirmar(){
 		var x = -1;
 		
-		if($("input[name='carastmp']:checked").val()==0 || $("input[name='carastmp']:checked").val()==1 || $("input[name='carastmp']:checked").val()==2){
-			x = $("input[name='carastmp']:checked").val();
-		}
-		
-		if(x == -1){
-			alert("Por favor, Seleccione cuantas caras tiene su folleto."); return;
-		}
-		
 		$('#myModal').modal({
 		  keyboard: true
 		})
 	}
-	
-	function aceptar(){
-		$('#caras').val($("input[name='carastmp']:checked").val());
-		$('#comentarios').val($('#comentariostmp').val());
-		$('#ordenventa').val(<?= $pedido -> crm_numero ?>);
-	}
-	
 	
 </script>
 <script>
@@ -156,8 +143,10 @@ $(document).ready(function(){
       
       $('#boton').hide();
 	  $('#file_upload').show();
-
-      $("#mensaje").load("<?= APLICACION_PATH ?>uploader/revisar/<?= $pedido -> crm_numero ?>");
+	  
+	  $("#temporal").load("<?= APLICACION_PATH ?>uploader/cancelar/<?= $pedido -> crm_numero ?>");
+	  
+	  location.reload();
    });
 })
 </script>
@@ -170,7 +159,7 @@ $(document).ready(function(){
 					<legend style="font-size: 24px; color: yellow;">SUBIR ARCHIVOS PARA IMPRESIÓN</legend>
 					<table border="0" cellpadding="5" style="width: 100%">
 						<tr>
-							<td colspan="2" align="center">
+							<td colspan="2" align="center" id="filex">
 								<input id="file_upload" name="file_upload" type="file" multiple="false">
 							</td>
 						</tr>
@@ -181,3 +170,21 @@ $(document).ready(function(){
 		<div class="span3"></div>
 	</div>
 </div>
+<div id="myModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="font-size: 14px;">
+	<?= Formulario::inicio("uploader/terminar","class: form-horizontal well","style: margin: auto;") ?>
+		<?= Formulario::oculto("pedido", $pedido -> id) ?>
+	 <div class="modal-header" align="center">
+	 	<button type="button" class="close" data-dismiss="modal" aria-hidden="true">x</button>
+	 	<h3 id="myModalLabel"><?= Mensajes::consultar("DISENO_CASI_LISTO") ?></h3>
+	 </div>
+	 <div class="modal-body" align="justify">
+	 	<?= Mensajes::consultar("TERMINAR_PREPRENSA") ?>
+	 </div>
+	  <div class="modal-footer">
+	    <button class="btn btn-danger" id="revisar" data-dismiss="modal" aria-hidden="true">Revisar</button>
+	    <button class="btn btn-success" onclick="return aceptar();">Aceptar</button>
+	  </div>
+	 <?= Formulario::fin() ?>
+</div>
+<div id="temporal" style="display: none;"></div>
+<?php } ?>

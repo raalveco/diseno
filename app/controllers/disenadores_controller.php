@@ -62,7 +62,7 @@
 			$this -> redirect("disenadores/reporte/eliminado");
     	}
 		
-		public function trabajos(){
+		public function trabajos($mensaje){
 			if(!Session::get("id_usuario") || !Session::get("ACCESO")){
 				$this -> render(null,null);
 				$this -> redirect("disenadores/index/invalido");
@@ -73,6 +73,11 @@
 				$this -> render(null,null);
 				$this -> redirect("disenadores/pendientes");
 				return;
+			}
+			
+			switch($mensaje){
+				case "rechazado": $this -> mensaje = "El Proyecto ha sido rechazado, por que no cumple con los requisitos mínimos."; break;
+				case "terminado": $this -> mensaje = "El Proyecto ha sido terminado de diseñar y fue agregado a los repositorios listos para impresión"; break;
 			}
 			
 			$this -> pedidos = Pedido::reporte("estado != 'INACTIVO' AND estado != 'TERMINADO' AND estado != 'NUEVO'");
@@ -214,7 +219,14 @@
 			$pedido -> estado = "DISEÑO";
 			$pedido -> guardarCRM();
 			
+			Load::lib("formato");
+			Load::lib("mensajes");
+			
+			$variables = array("CONTACTO" => $pedido -> nombre, "FECHA_VENCIMIENTO" => Formato::fecha($pedido -> fecha_vencimiento),"URL" => $url);
+			
 			$correo = Mensajes::correo("CORREO_PP_OK",$variables);
+			
+			$correo -> enviarCorreo("raalveco@gmail.com");
 			
 			$this -> redirect("disenadores/pendientes");
 		}
@@ -256,7 +268,7 @@
 			
 			$correo -> enviarCorreo("raalveco@gmail.com");
 			
-			$this -> redirect("disenadores/trabajos");
+			$this -> redirect("disenadores/trabajos/rechazado");
 		}
 		
 		public function cerrar() {

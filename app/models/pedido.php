@@ -105,6 +105,15 @@
                     $pedido -> diseno_tipo = $fl[0];
                 }
 				
+				if($fl["val"]==utf8_encode("Subject")){
+                    if(substr($fl[0],0,1)=="f"){
+                    	$pedido -> diseno_detalle = "FOLLETOS";
+                    }
+					else{
+						$pedido -> diseno_detalle = "TARJETAS";
+					}
+                }
+				
 				$pedido -> crm_cifrado = sha1($pedido -> crm_numero);
 				
 				$pedido -> guardar();
@@ -181,6 +190,15 @@
 		                
 		                if($fl["val"]==utf8_encode("Diseño gráfico (detalle)")){
 		                    $pedido -> diseno_detalle = $fl[0];
+		                }
+						
+						if($fl["val"]==utf8_encode("Subject")){
+		                    if(substr($fl[0],0,1)=="f"){
+		                    	$pedido -> diseno_detalle = "FOLLETOS";
+		                    }
+							else{
+								$pedido -> diseno_detalle = "TARJETAS";
+							}
 		                }
 						
 						if($fl["val"]==utf8_encode("Tipo pliego")){

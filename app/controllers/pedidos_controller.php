@@ -2,6 +2,12 @@
 
 	class PedidosController extends ApplicationController {
 		
+		public function que_sigue(){
+			Load::lib("mensajes");
+			
+			$this -> mensaje = Mensajes::consultar("MENSAJE_QUE_SIGUE");
+		}
+		
 		public function reporte($mensaje) {
     		$this -> pedidos = Pedido::reporte();
 			

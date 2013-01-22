@@ -65,6 +65,103 @@
 			echo utf8_encode(Mensajes::consultar("INICIO_UPLOADER",array("PRUEBA" => "Ramiro Vera")));
 		}
 		
+		public function cancelar($ov){
+			$this -> render(null,null);
+			
+			$directorio = APP_PATH."public/img/uploadify/tmp/".$ov;
+			
+			if(file_exists($directorio)){
+				$dir = opendir($directorio); 
+				
+				while ($archivo = readdir($dir)){
+					@unlink($directorio."/".$archivo);
+				}
+				
+				@rmdir($directorio);
+				
+				@closedir($dir);
+			}
+			
+			echo "";
+		}
+		
+		public function terminar(){
+			$this -> render(null,null);
+			
+			$pedido = Pedido::consultar($this -> post("pedido"));
+			
+			$pedido -> diseno_estado = "Diseño OK";
+			
+			Load::lib("pclzip");
+            $nombre = $pedido -> crm_numero.".zip";
+            
+			$directorio = substr($_SERVER["SCRIPT_FILENAME"],0,strrpos($_SERVER["SCRIPT_FILENAME"],"/"));
+			$url = $directorio."/".$nombre;
+			
+			if(file_exists($url)){
+				unlink($url);
+			}
+			
+			if(file_exists(substr($_SERVER["SCRIPT_FILENAME"],0,strrpos($_SERVER["SCRIPT_FILENAME"],"/"))."/img/uploadify/tmp/".$pedido -> crm_numero."/")){
+				$zip = new PclZip($nombre);
+			
+                $zip -> create(".");
+            
+	  			$dir = opendir(substr($_SERVER["SCRIPT_FILENAME"],0,strrpos($_SERVER["SCRIPT_FILENAME"],"/"))."/img/uploadify/tmp/".$pedido -> crm_numero."/"); 
+				
+				while ($archivo = readdir($dir)){
+					if($archivo == "." || $archivo == "..") continue;
+					
+					$zip -> add(substr($_SERVER["SCRIPT_FILENAME"],0,strrpos($_SERVER["SCRIPT_FILENAME"],"/"))."/img/uploadify/tmp/".$pedido -> crm_numero."/".$archivo,PCLZIP_OPT_REMOVE_ALL_PATH);
+                    
+                    unlink(substr($_SERVER["SCRIPT_FILENAME"],0,strrpos($_SERVER["SCRIPT_FILENAME"],"/"))."/img/uploadify/tmp/".$pedido -> crm_numero."/".$archivo);
+                }
+			}
+            
+            if(!file_exists($directorio."/files/repositorios/")){
+                mkdir($directorio."/files/repositorios/");
+                mkdir($directorio."/files/repositorios/originales/");
+                mkdir($directorio."/files/repositorios/listos/");
+				mkdir($directorio."/files/repositorios/tarjetas/");
+            }
+            
+            if(!file_exists($directorio."/files/repositorios/originales/")){
+                mkdir($directorio."/files/repositorios/originales/");
+            }
+            
+            if(!file_exists($directorio."/files/repositorios/listos/")){
+                mkdir($directorio."/files/repositorios/listos/");
+            }
+			
+			if(!file_exists($directorio."/files/repositorios/tarjetas/")){
+                mkdir($directorio."/files/repositorios/tarjetas/");
+            }
+            
+            if($pedido -> diseno_detalle == "FOLLETOS"){
+                rename($directorio."/".$nombre,$directorio."/files/repositorios/listos/".$nombre);
+				$repositorio = APLICACION_URL."files/repositorios/listos/".$nombre;
+            }
+            else{
+                rename($directorio."/".$nombre,$directorio."/files/repositorios/tarjetas/".$nombre);
+                $repositorio = APLICACION_URL."files/repositorios/tarjetas/".$nombre;
+            }
+            
+            if(file_exists(substr($_SERVER["SCRIPT_FILENAME"],0,strrpos($_SERVER["SCRIPT_FILENAME"],"/"))."/img/uploadify/tmp/".$pedido -> crm_numero."/")){
+                rmdir(substr($_SERVER["SCRIPT_FILENAME"],0,strrpos($_SERVER["SCRIPT_FILENAME"],"/"))."/img/uploadify/tmp/".$pedido -> crm_numero."/");
+            }
+			
+			Load::lib("mensajes");
+			
+			$correo = Mensajes::correo("CORREO_PP_TERMINADA",array("PEDIDO" => $pedido -> crm_numero));
+			$correo -> enviarCorreo("raalveco@gmail.com");
+			
+			$pedido -> estado = "TERMINADO";
+			
+			$pedido -> guardarCRM();
+			
+			$this -> redirect("disenadores/trabajos/terminado");
+		}
+		
 		public function cargar(){
 			
 			$pedido = Pedido::consultar($this -> post("pedido"));

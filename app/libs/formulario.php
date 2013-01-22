@@ -56,6 +56,31 @@
                 $opciones .= ', beforeSubmit: function() { '.$params["before"].' }';
             }
             
+            $code = form_tag($params);
+            
+            return $code;
+        }
+		
+		public static function validado($accion,$x=0){
+            $params = is_array($accion) ? $accion : Util::getParams(func_get_args());
+            
+            $params["enctype"] = "multipart/form-data";
+            
+            if($x==0) $x = rand(0,9999999);
+            
+            $params["name"] = "f".$x;
+            $params["id"] = "f".$x;
+            
+            $opciones = '';
+            
+            if(isset($params["success"])){
+                $opciones .= ', success: function() { '.$params["success"].' }';
+            }
+            
+            if(isset($params["before"])){
+                $opciones .= ', beforeSubmit: function() { '.$params["before"].' }';
+            }
+            
             $code = '<script type="text/javascript"> $.metadata.setType("attr", "validate"); $(document).ready(function() { $("#'.$params["id"].'").validate({}); }); </script>';
             $code .= form_tag($params);
             
