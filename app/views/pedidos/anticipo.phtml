@@ -56,7 +56,7 @@
 						</tr>
 						<tr>
 							<td colspan="2" style="text-align: right"> <?= Formulario::reset("Cancelar","style: font-weight: bold;","class: btn btn-danger") ?>
-							<?= Formulario::submit("Modificar","style: font-weight: bold;","class: btn btn-success") ?>						
+							<?= Formulario::submit("Registrar","style: font-weight: bold;","class: btn btn-success") ?>						
 							</td>						
 						</tr>	
 					</table>
@@ -65,7 +65,7 @@
 				<th width="20%"></th>
 				<th width="30%" style="vertical-align: top;">
 					<?= Formulario::inicio("pedidos/registrarAnticipo/transferencia","registro","class: form-horizontal well","style: margin: auto")?>
-					<?= Formulario::oculto("id_pedido", $pedido -> pedido) ?>
+					<?= Formulario::oculto("id_pedido", $pedido -> id) ?>
 					<table border="0" style="padding: 5px">
 						<tr>
 							<td colspan="2" style="text-align: left">TRANSFERENCIA</td>
@@ -96,7 +96,7 @@
 						</tr>
 						<tr>
 							<td colspan="2" style="text-align: right"> <?= Formulario::reset("Cancelar","style: font-weight: bold;","class: btn btn-danger") ?>
-							<?= Formulario::submit("Modificar","style: font-weight: bold;","class: btn btn-success") ?>						
+							<?= Formulario::submit("Registrar","style: font-weight: bold;","class: btn btn-success") ?>						
 							</td>						
 						</tr>	
 					</table>
