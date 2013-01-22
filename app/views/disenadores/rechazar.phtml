@@ -1,0 +1,36 @@
+<?php Load::lib("formulario"); ?>
+<?= isset($mensaje) ? '<div class="alert alert-error" style="margin: 0px auto 30px; width: 800px;">' . $mensaje . "</div>" : "" ?>
+<div class="container">
+	<?= Formulario::inicioNoValidado("disenadores/rechazado","consulta","class: form-horizontal well","style: margin: 0px auto 0px; width: 560px;") ?>
+		<?= Formulario::oculto("id", $pedido -> id) ?>
+		<fieldset>
+			<legend>Reportar Errores a <?= $pedido -> nombre ?></legend>
+			<div class="control-group">
+				<table cellpadding="10">
+					<?php $errores = Errores::reporte("codigo = 'PP_NO_OK'"); ?>
+					<?php if($errores) foreach($errores as $error){ ?>
+					<tr>
+						<th><?= Formulario::checkbox("error".$error -> id) ?></th>
+						<td style="padding-top: 15px;"><?= $error -> error ?></td>
+					</tr>
+					<?php } ?>
+				</table>
+	        </div>
+	        <div class="control-group">
+	           	<table cellpadding="10">
+	           		<tr>
+	           			<td>Comentarios Adicionales: </td>
+	           		</tr>
+	           		<tr>
+	           			<td>
+	           				<?= Formulario::richtext("comentarios","",539,170) ?>
+	           			</td>
+	           		</tr>
+	           	</table>
+	        </div>
+	        <div class="form-actions" align="right">
+	        	<?= Formulario::submit("Enviar Errores","style: font-weight: bold;","class: btn btn-success") ?>
+          	</div>
+		</fieldset>
+	<?= Formulario::fin() ?>	
+</div>

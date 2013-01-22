@@ -63,35 +63,37 @@
     	}
 		
 		public function trabajos(){
-			if(!Session::get("ACCESO")){
+			if(!Session::get("id_usuario") || !Session::get("ACCESO")){
+				$this -> render(null,null);
 				$this -> redirect("disenadores/index/invalido");
+				return;
 			}
 			
-			if(Pedido::existe("estado = 'ASIGNADO' AND disenador_id = ".Session::get("id_usuario"))){
+			if(Pedido::existe("(estado = 'ASIGNADO' OR estado = 'DISEÑO') AND disenador_id = ".Session::get("id_usuario"))){
+				$this -> render(null,null);
 				$this -> redirect("disenadores/pendientes");
+				return;
 			}
 			
 			$this -> pedidos = Pedido::reporte("estado != 'INACTIVO' AND estado != 'TERMINADO' AND estado != 'NUEVO'");
 		}
 		
 		public function pendientes(){
-			if(!Session::get("ACCESO")){
+			if(!Session::get("id_usuario") || !Session::get("ACCESO")){
+				$this -> render(null,null);
 				$this -> redirect("disenadores/index/invalido");
+				return;
 			}
 			
-			if(!Pedido::existe("estado = 'ASIGNADO' AND disenador_id = ".Session::get("id_usuario"))){
+			if(!Pedido::existe("(estado = 'ASIGNADO' OR estado = 'DISEÑO') AND disenador_id = ".Session::get("id_usuario"))){
 				$this -> redirect("disenadores/trabajos");
+				return;
 			}
 			
-			$this -> pedidos = Pedido::reporte("estado = 'ASIGNADO' AND disenador_id = ".Session::get("id_usuario"));
+			$this -> pedidos = Pedido::reporte("(estado = 'ASIGNADO' OR estado = 'DISEÑO') AND disenador_id = ".Session::get("id_usuario"));
 		}
 		
 		public function index($mensaje){
-			Session::set("id_usuario", "");
-			Session::set("usuario", "");
-			Session::set("tipo","");
-			Session::set("ACCESO", false);
-			
 			switch($mensaje){
 				case "error": $this -> mensaje = "El Nombre de Usuario y/o Contraseña son incorrectos, Intente de nuevo."; break;
 				case "invalido": $this -> mensaje = "Acceso Inválido, Por favor Inicie Sesión para poder ingresar a la sección para diseñadores."; break;
@@ -125,10 +127,16 @@
 			}   
     	}
     	
-    	public function solicitar($id) {
+    	public function solicitar($ov_cifrada) {
 			$this -> render(null, null);
 			
-			$pedido = Pedido::consultar($id);
+			if(!Session::get("id_usuario") || !Session::get("ACCESO")){
+				$this -> render(null,null);
+				$this -> redirect("disenadores/index/invalido");
+				return;
+			}
+			
+			$pedido = Pedido::consultar("crm_cifrado = '".$ov_cifrada."'");
 			
 			$pedido -> disenador_id = Session::get("id_usuario");
 			$pedido -> estado = "ASIGNADO";
@@ -140,6 +148,12 @@
 		
 		public function descargar($ov_cifrada){
 			$this -> render(null, null);
+			
+			if(!Session::get("id_usuario") || !Session::get("ACCESO")){
+				$this -> render(null,null);
+				$this -> redirect("disenadores/index/invalido");
+				return;
+			}
 			
 			$pedido = Pedido::consultar("crm_cifrado = '".$ov_cifrada."'");
 			
@@ -156,6 +170,12 @@
 		public function trabajo($ov_cifrada, $tipo){
 			$this -> render(null, null);
 			
+			if(!Session::get("id_usuario") || !Session::get("ACCESO")){
+				$this -> render(null,null);
+				$this -> redirect("disenadores/index/invalido");
+				return;
+			}
+			
 			$pedido = Pedido::consultar("crm_cifrado = '".$ov_cifrada."'");
 			
 			if($tipo == "OK"){
@@ -164,6 +184,79 @@
 			else{
 				$this -> redirect("disenadores/rechazar/".$ov_cifrada."");
 			}
+		}
+		
+		public function rechazar($ov_cifrada){
+			if(!Session::get("id_usuario") || !Session::get("ACCESO")){
+				$this -> render(null,null);
+				$this -> redirect("disenadores/index/invalido");
+				return;
+			}
+			
+			$this -> pedido = Pedido::consultar("crm_cifrado = '".$ov_cifrada."'");
+		}
+		
+		public function disenar($ov_cifrada){
+			$this -> render(null,null);
+			
+			if(!Session::get("id_usuario") || !Session::get("ACCESO")){
+				$this -> render(null,null);
+				$this -> redirect("disenadores/index/invalido");
+				return;
+			}
+			
+			$pedido = Pedido::consultar("crm_cifrado = '".$ov_cifrada."'");
+			
+			$vencimiento = Deadline::vencimiento();
+			
+			$pedido -> fecha_vencimiento = $vencimiento;
+			$pedido -> diseno_estado = "En Preprensa";
+			$pedido -> estado = "DISEÑO";
+			$pedido -> guardarCRM();
+			
+			$correo = Mensajes::correo("CORREO_PP_OK",$variables);
+			
+			$this -> redirect("disenadores/pendientes");
+		}
+		
+		public function rechazado(){
+			$this -> render(null,null);
+			
+			if(!Session::get("id_usuario") || !Session::get("ACCESO")){
+				$this -> render(null,null);
+				$this -> redirect("disenadores/index/invalido");
+				return;
+			}
+			
+			$pedido = Pedido::consultar($this -> post("id"));
+			
+			Load::lib("mensajes");
+			
+			$errores = Errores::reporte("codigo = 'PP_NO_OK'");
+			
+			$mensaje_errores = "";
+			
+			if($errores) foreach($errores as $error){
+				if($this -> post("error".$error -> id)=="on"){
+					$mensaje_errores .= "<li>".Errores::consultar($error -> id) -> mensaje."</li><br>";
+				}
+			}
+			
+			$url = APLICACION_URL."uploader/index/".$pedido -> crm_cifrado;
+			
+			$variables = array("CONTACTO" => $pedido -> nombre, "PEDIDO" => $pedido -> crm_numero,"ERRORES" => $mensaje_errores,"COMENTARIOS" => $this -> post("comentarios"),"URL" => $url);
+			
+			$correo = Mensajes::correo("CORREO_PP_NO_OK",$variables);
+			
+			$pedido -> diseno_grafico = "Cliente Envia";
+			$pedido -> diseno_estado = "";
+			$pedido -> estado = "TERMINADO";
+			
+			$pedido -> guardarCRM();
+			
+			$correo -> enviarCorreo("raalveco@gmail.com");
+			
+			$this -> redirect("disenadores/trabajos");
 		}
 		
 		public function cerrar() {

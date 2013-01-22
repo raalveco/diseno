@@ -22,15 +22,19 @@
 			<td><?= $pedido -> crm_numero ?></td>
 			<td><?= $pedido -> tipo_diseno ?> <?= $pedido -> diseno_tipo ?></td>
 			<td>
-				<?= $pedido -> estado == "ASIGNADO" ? Disenador::consultar($pedido -> disenador_id) -> nombre : "Esperando..." ?>
+				<?= ($pedido -> estado == "ASIGNADO" || $pedido -> estado == "DISEÑO") && Disenador::consultar($pedido -> disenador_id) ? Disenador::consultar($pedido -> disenador_id) -> nombre : "Esperando..." ?>
 			</td>
 			<td style="text-align: center">
 				<?php if($pedido -> estado == "DISPONIBLE"){ ?>
-					<?= Html::link("disenadores/consulta/".$pedido -> id, "Solicitar Trabajo") ?>
+					<?= Html::link("disenadores/consulta/".$pedido -> crm_cifrado, "Solicitar Trabajo") ?>
 				<?php } else { ?>
 					<?= Html::link("disenadores/descargar/".$pedido -> crm_cifrado,"BAJAR") ?> |
-					<?= Html::link("disenadores/trabajo/".$pedido -> crm_cifrado."/OK","OK", "onclick: return confirmar".$pedido -> id."();") ?> | 
-					<?= Html::link("disenadores/trabajo/".$pedido -> crm_cifrado."/NOOK","NO OK", "onclick: return confirmar".$pedido -> id."();") ?>
+					<?php if($pedido -> estado == "DISEÑO"){ ?>
+						<?= Html::link("disenadores/upload/".$pedido -> crm_cifrado, "SUBIR") ?>
+					<?php } else { ?>
+						<?= Html::link("disenadores/trabajo/".$pedido -> crm_cifrado."/OK","OK", "onclick: return confirmar".$pedido -> id."();") ?> | 
+						<?= Html::link("disenadores/trabajo/".$pedido -> crm_cifrado."/NOOK","NO OK", "onclick: return confirmar".$pedido -> id."();") ?>
+					<?php } ?>
 				<?php } ?>
 			</td>
 		</tr>
@@ -39,4 +43,141 @@
 	<?php } else{ ?>
 		No hay trabajos disponibles por el momento.	
 	<?php } ?>	
+</div>
+
+<?= Load::lib("formulario") ?>
+<?= Load::lib("mensajes") ?>
+<style type="text/css">
+	body{
+		font-size: 12px;
+	}
+	.attach {
+		width: 150px;
+		font-size: 12px;
+		background-color: white;
+		color: black;
+	}
+	
+	.attach img {
+		float:left;
+	}
+	
+	#SWFUpload_0 {
+		width: 150px;
+	}
+</style>
+<?= javascript_include_tag('jquery.uploadify.min') ?>
+<?= stylesheet_link_tag('uploadify/uploadify') ?>
+<script type="text/javascript">
+	<?php $timestamp = time();?>
+	$(function() {
+		$('#file_upload').uploadify({
+			'buttonText' : '<div class=attach><img src=/diseno/img/uploadify/attachment.png ></img><p>Adjuntar Archivo</p></div>',
+			'multi': false,
+			'formData'     : {
+				'timestamp' : '<?php echo $timestamp;?>',
+				'token'     : '<?php echo md5('unique_salt' . $timestamp);?>',
+				'pedido'	: '<?= $pedido -> crm_numero ?>'
+			},
+			'onUploadStart' : function(file){
+				
+			},
+			'onUploadSuccess' : function(file, data, response){
+				var res = jQuery.parseJSON(data);
+				
+				if(res.status == "ok"){
+					
+					$("#name1").html(res.file);
+					
+					$('#temporal').load('<?= get_kumbia_url("uploader/archivo") ?>/'+res.file+'/'+res.msg);
+					
+					setTimeout( function() {
+						if(res.numero > 1){
+							$("#mensaje").append($('#temporal').html());
+						}
+						else{
+							$("#mensaje").html($('#temporal').html());
+						}
+					}, 2000 );
+					
+					$('#boton').show();
+					
+					$('#file_upload').hide();
+					
+					$('#archivo').val(res.file);
+					
+				}
+				else{
+					
+					$('#modal-body').load('<?= get_kumbia_url("uploader/error") ?>/'+res.file+'/'+res.error);
+					
+					setTimeout( function() {
+						$('#errorModal').modal({
+						  keyboard: true
+						});
+					}, 1000 );
+				}
+    		},
+			'swf'      : '<?= PUBLIC_PATH ?>uploadify.swf',
+			'uploader' : '<?= PUBLIC_PATH ?>uploadify.php'
+		});
+		
+		$('#boton').hide();
+	});
+	
+	function confirmar(){
+		var x = -1;
+		
+		if($("input[name='carastmp']:checked").val()==0 || $("input[name='carastmp']:checked").val()==1 || $("input[name='carastmp']:checked").val()==2){
+			x = $("input[name='carastmp']:checked").val();
+		}
+		
+		if(x == -1){
+			alert("Por favor, Seleccione cuantas caras tiene su folleto."); return;
+		}
+		
+		$('#myModal').modal({
+		  keyboard: true
+		})
+	}
+	
+	function aceptar(){
+		$('#caras').val($("input[name='carastmp']:checked").val());
+		$('#comentarios').val($('#comentariostmp').val());
+		$('#ordenventa').val(<?= $pedido -> crm_numero ?>);
+	}
+	
+	
+</script>
+<script>
+$(document).ready(function(){
+   $("#revisar").click(function(evento){
+      evento.preventDefault();
+      
+      $('#boton').hide();
+	  $('#file_upload').show();
+
+      $("#mensaje").load("<?= APLICACION_PATH ?>uploader/revisar/<?= $pedido -> crm_numero ?>");
+   });
+})
+</script>
+<div class="container" style="font-size: 14px;">
+	<div class="row">
+		<div class="span3"></div>
+		<div class="span6" align="center">
+			<?= Formulario::inicio("#",true,"class: form-horizontal well","style: margin: auto; height: 150px;") ?>
+				<fieldset>
+					<legend style="font-size: 24px; color: yellow;">SUBIR ARCHIVOS PARA IMPRESIÓN</legend>
+					<table border="0" cellpadding="5" style="width: 100%">
+						<tr>
+							<td colspan="2" align="center">
+								<input id="file_upload" name="file_upload" type="file" multiple="false">
+							</td>
+						</tr>
+					</table>
+				</fieldset>
+			<?= Formulario::fin() ?>
+		</div>
+		<div class="span3"></div>
+	</div>
 </div>

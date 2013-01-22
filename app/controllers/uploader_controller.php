@@ -5,20 +5,20 @@
 			
 			Load::lib("mensajes");
 			
-			$this -> mensaje = Mensajes::consultar("ORDEN_INVALIDA");
-			
 			if($pedido){
 				Session::set("pedido",$pedido -> id);
 				
-				if($pedido -> diseno_estado){
-					
-					$this -> mensaje = Mensajes::consultar("ES_DA");
+				if($pedido -> tipo_diseno == "DA"){
+					$this -> mensaje = Mensajes::consultar("PEDIDO_ES_DA");
 				}
 				else{
 					$this -> render(null,null);
 					$this -> redirect("uploader/inicio/pp");
 					return;	
 				}
+			}
+			else{
+				$this -> mensaje = Mensajes::consultar("ORDEN_INVALIDA");
 			}
         }
 		
