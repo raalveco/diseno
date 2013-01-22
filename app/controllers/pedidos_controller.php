@@ -187,12 +187,14 @@
 									"PEDIDO" => $pedido -> crm_numero,
 									"URL" => APLICACION_URL."pedidos/que_sigue"
 							  );
-						
+					
 					$this -> mensaje = Mensajes::consultar("MENSAJE_SENA_ARCHIVOS",$variables);
 				
 					$correo = Mensajes::correo("CORREO_SENA_ARCHIVOS",$variables);
 					$correo -> enviarCorreo("raalveco@gmail.com");	
 					
+					$pedido -> estado = "DISPONIBLE";
+					$pedido -> guardar();
 					return;
 				}
 				else{
