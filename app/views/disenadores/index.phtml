@@ -1,0 +1,24 @@
+<?php Load::lib("formulario"); ?>
+<?= isset($mensaje) ? '<div class="alert alert-error" style="margin: 0px auto 30px; width: 800px;">' . $mensaje . "</div>" : "" ?>
+<div class="container">
+	<?= Formulario::inicio("disenadores/ingresar","consulta","class: form-horizontal well","style: margin: 0px auto 0px; width: 421px;") ?>
+		<fieldset>
+			<legend>Inicio de Sesion</legend>
+			<div class="control-group">
+	            <label class="control-label">Usuario: </label>
+	            <div class="controls">
+	           		<?= Formulario::texto("usuario", "") ?>
+	            </div>
+	        </div>
+	        <div class="control-group">
+	            <label class="control-label">Contraseña: </label>
+	            <div class="controls">
+	           		<?= Formulario::password("password", "") ?>
+	            </div>
+	        </div>
+	        <div class="form-actions" align="right">
+	        	<?= Formulario::submit("Ingresar","style: font-weight: bold;","class: btn btn-success") ?>
+          	</div>
+		</fieldset>
+	<?= Formulario::fin() ?>	
+</div>

@@ -5,20 +5,20 @@
 			
 			Load::lib("mensajes");
 			
-			$this -> mensaje = Mensajes::consultar("ORDEN_INVALIDA");
-			
 			if($pedido){
 				Session::set("pedido",$pedido -> id);
 				
-				if($pedido -> diseno_estado){
-					
-					$this -> mensaje = Mensajes::consultar("MENSAJES_ARCHIVOS_PRECARGADOS");
+				if($pedido -> tipo_diseno == "DA"){
+					$this -> mensaje = Mensajes::consultar("PEDIDO_ES_DA");
 				}
 				else{
 					$this -> render(null,null);
 					$this -> redirect("uploader/inicio/pp");
 					return;	
 				}
+			}
+			else{
+				$this -> mensaje = Mensajes::consultar("ORDEN_INVALIDA");
 			}
         }
 		
@@ -116,10 +116,14 @@
             if($this -> post("caras")==1){
                 $nombre2 = $pedido -> crm_numero." [FYF].zip";
             }
+			
+			$pedido -> originales = $nombre2;
+			$pedido -> descargado = 0;
+			$pedido -> guardar(); 
             
             if(strtoupper($this -> post("tipo_folleto"))=="DA"){
                 rename($directorio."/".$nombre,$directorio."/files/repositorios/listos/".$nombre2);
-				$repositorio = APLICACION_URL."files/repositorioslistos/".$nombre2;
+				$repositorio = APLICACION_URL."files/repositorios/listos/".$nombre2;
             }
             else{
                 rename($directorio."/".$nombre,$directorio."/files/repositorios/originales/".$nombre2);

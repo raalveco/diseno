@@ -182,8 +182,8 @@
 		                if($fl["val"]==utf8_encode("Diseño gráfico (detalle)")){
 		                    $pedido -> diseno_detalle = $fl[0];
 		                }
-		                
-		                if($fl["val"]==utf8_encode("Diseño gráfico (tipo)")){
+						
+						if($fl["val"]==utf8_encode("Tipo pliego")){
 		                    $pedido -> diseno_tipo = $fl[0];
 		                }
 						

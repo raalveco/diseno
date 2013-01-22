@@ -1,0 +1,32 @@
+<?php Load::lib("html") ?>
+<?= isset($mensaje) ? '<div class="alert alert-error" style="margin: 0px auto 30px; width: 90%;">' . $mensaje . "</div>" : "" ?>
+<div class="container">
+	<?php if($pedidos){?>
+		<table border="1" cellpadding="5" cellspacing="1" class="table table-bordered table-striped">
+		<tr>
+			<th>Proyecto</th>
+			<th>Tipo</th>
+			<th>Diseñador</th>
+			<th>Acciones</th>			
+		</tr>
+		<?php if($pedidos) foreach($pedidos as $pedido){ ?>
+		<tr>
+			<td><?= $pedido -> crm_numero ?></td>
+			<td><?= $pedido -> tipo_diseno ?> <?= $pedido -> diseno_tipo ?></td>
+			<td>
+				<?= (($pedido -> estado == "ASIGNADO" || $pedido -> estado == "DISEÑO") && Disenador::existe($pedido -> disenador_id)) ? Disenador::consultar($pedido -> disenador_id) -> nombre : "Esperando..." ?>
+			</td>
+			<td style="text-align: center">
+				<?php if($pedido -> estado == "DISPONIBLE" || ($pedido -> estado == "ASIGNADO" && !Disenador::existe($pedido -> disenador_id))){ ?>
+					<?= Html::link("disenadores/solicitar/".$pedido -> crm_cifrado, "Solicitar Trabajo") ?>
+				<?php } else { ?>
+					Asignado
+				<?php } ?>
+			</td>
+		</tr>
+		<?php } ?>
+	</table>	
+	<?php } else{ ?>
+		No hay trabajos disponibles por el momento.	
+	<?php } ?>
+</div>
